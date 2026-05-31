@@ -10,10 +10,10 @@
   }
 
   /* Google Drive 共有URL → 直接表示URL に変換
-     https://drive.google.com/file/d/FILE_ID/view  →  uc?export=view&id=FILE_ID */
+     https://drive.google.com/file/d/FILE_ID/view  →  lh3.googleusercontent.com/d/FILE_ID */
   function driveUrl(raw) {
     const m = raw.match(/\/d\/([a-zA-Z0-9_-]+)/);
-    return m ? 'https://drive.google.com/uc?export=view&id=' + m[1] : raw;
+    return m ? 'https://lh3.googleusercontent.com/d/' + m[1] : raw;
   }
 
   /* RFC 4180 準拠の CSV 1行パーサー */
