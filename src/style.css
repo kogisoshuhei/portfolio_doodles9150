@@ -257,9 +257,10 @@ img { display: block; max-width: 100%; }
 /* viewport: overflow:hidden + padding = peek effect
    padding 内は viewport の box 内なので clip されず、隣スライドが覗く */
 .slideshow__viewport {
-  overflow: hidden;
-  position: relative;
-  padding:  0 72px;
+  overflow:     hidden;
+  position:     relative;
+  padding:      0 72px;
+  touch-action: pan-y; /* iOS: 縦スクロールを妨げない */
 }
 
 /* arrow buttons: absolutely positioned over the stage */
@@ -1155,6 +1156,10 @@ img { display: block; max-width: 100%; }
   .boardgame-img-grid       { grid-template-columns: repeat(2, 1fr); }
   .boardgame-card-grid      { grid-template-columns: repeat(2, 1fr); }
   .news-card-grid           { grid-template-columns: repeat(2, 1fr); }
+
+  /* スライドショー: モバイルでは覗き見パディングを縮小・矢印を非表示 */
+  .slideshow__viewport      { padding: 0 20px; }
+  .slideshow__btn           { display: none; }
 }
 
 @media (max-width: 480px) {
@@ -1162,6 +1167,9 @@ img { display: block; max-width: 100%; }
   .header__nav a { padding: 7px 10px; }
   .boardgame-img-grid       { grid-template-columns: repeat(2, 1fr); }
   .boardgame-card-grid      { grid-template-columns: repeat(2, 1fr); }
+
+  /* スライドショー: 小画面では覗き見を無効化 */
+  .slideshow__viewport      { padding: 0; }
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -1185,9 +1193,10 @@ img { display: block; max-width: 100%; }
 }
 .boardgame-card:hover { background: var(--fg); color: var(--bg); }
 .boardgame-card__thumb {
-  position: relative;
+  position:     relative;
+  width:        100%;
   aspect-ratio: 1;
-  overflow: hidden;
+  overflow:     hidden;
 }
 .boardgame-card__img {
   width: 100%;
@@ -1261,14 +1270,13 @@ img { display: block; max-width: 100%; }
 }
 
 .boardgame-card__label {
-  display: flex;
+  display:        flex;
   flex-direction: column;
-  gap: 3px;
-  padding: 6px 8px;
-  font-size: var(--size-xs);
+  gap:            3px;
+  padding:        6px 8px;
+  font-size:      var(--size-xs);
   letter-spacing: var(--ls-wide);
-  border-top: var(--border);
-  overflow: hidden;
+  border-top:     var(--border);
 }
 .boardgame-card:hover .boardgame-card__label { border-top-color: var(--bg); }
 .boardgame-card__label-row {
