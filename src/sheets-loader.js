@@ -4,7 +4,8 @@
    ════════════════════════════════════════════════════════════ */
 (function () {
   if (typeof SHEETS_CONFIG === 'undefined' ||
-      (!SHEETS_CONFIG.worksUrl && !SHEETS_CONFIG.boardgameUrl)) {
+      (!SHEETS_CONFIG.worksUrl && !SHEETS_CONFIG.boardgameUrl &&
+       !SHEETS_CONFIG.newsUrl  && !SHEETS_CONFIG.settingsUrl)) {
     document.dispatchEvent(new Event('sheetsReady'));
     return;
   }
@@ -103,9 +104,43 @@
       }
 
       return obj;
-    }).filter(o => o.num);
+    }).filter(o => o.num || o.date);
 
     return rows.length ? rows : null;
+  }
+
+  /* SETTINGS シートパーサー（1行目: ヘッダー, 2行目: 値）
+     profileImg : プロフィール写真の Google Drive 共有URL
+     loaderImg  : ローダー画像の Google Drive 共有URL（以降の列も自動収集）
+  */
+  function parseSettings(text) {
+    const lines = text.split('\n').filter(l => l.trim());
+    if (lines.length < 2) return null;
+
+    const headers = parseLine(lines[0]).map(h => h.trim());
+    const vals    = parseLine(lines[1]);
+
+    const settings = {};
+
+    const profileIdx = headers.indexOf('profileImg');
+    if (profileIdx >= 0) {
+      let v = (vals[profileIdx] ?? '').trim();
+      if (v === '#VALUE!') v = '';
+      if (v) settings.profileImg = v.includes('drive.google.com') ? driveUrl(v) : v;
+    }
+
+    const loaderIdx = headers.indexOf('loaderImg');
+    if (loaderIdx >= 0) {
+      const loaderUrls = vals.slice(loaderIdx)
+        .map(s => (s ?? '').trim())
+        .filter(s => s && s !== '#VALUE!')
+        .flatMap(s => s.includes('|') ? s.split('|').map(u => u.trim()) : [s])
+        .filter(Boolean)
+        .map(s => s.includes('drive.google.com') ? driveUrl(s) : s);
+      if (loaderUrls.length) settings.loaderImgs = loaderUrls;
+    }
+
+    return Object.keys(settings).length ? settings : null;
   }
 
   /* 8秒以内にデータが取得できなければローカルデータで描画 */
@@ -118,18 +153,18 @@
     return url + (url.includes('?') ? '&' : '?') + '_t=' + Date.now();
   }
 
+  function fetchCsv(url) {
+    return url
+      ? fetch(bustCache(url), { cache: 'no-store' }).then(r => r.ok ? r.text() : null).catch(() => null)
+      : Promise.resolve(null);
+  }
+
   Promise.all([
-    SHEETS_CONFIG.worksUrl
-      ? fetch(bustCache(SHEETS_CONFIG.worksUrl), { cache: 'no-store' })
-          .then(r => r.ok ? r.text() : null)
-          .catch(() => null)
-      : Promise.resolve(null),
-    SHEETS_CONFIG.boardgameUrl
-      ? fetch(bustCache(SHEETS_CONFIG.boardgameUrl), { cache: 'no-store' })
-          .then(r => r.ok ? r.text() : null)
-          .catch(() => null)
-      : Promise.resolve(null),
-  ]).then(function ([worksCsv, bgCsv]) {
+    fetchCsv(SHEETS_CONFIG.worksUrl),
+    fetchCsv(SHEETS_CONFIG.boardgameUrl),
+    fetchCsv(SHEETS_CONFIG.newsUrl),
+    fetchCsv(SHEETS_CONFIG.settingsUrl),
+  ]).then(function ([worksCsv, bgCsv, newsCsv, settingsCsv]) {
     if (worksCsv) {
       const data = parseCSV(worksCsv, 'works');
       if (data) WORKS = data;
@@ -137,6 +172,14 @@
     if (bgCsv) {
       const data = parseCSV(bgCsv, 'boardgame');
       if (data) BOARDGAME = data;
+    }
+    if (newsCsv) {
+      const data = parseCSV(newsCsv, 'news');
+      if (data) NEWS = data;
+    }
+    if (settingsCsv) {
+      const data = parseSettings(settingsCsv);
+      if (data) window.SITE_SETTINGS = data;
     }
   }).catch(function () {
     /* ネットワークエラー → ローカルデータで続行 */

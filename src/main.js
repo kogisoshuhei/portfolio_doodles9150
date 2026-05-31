@@ -188,6 +188,11 @@ function setLang(lang) {
   }
 
   function showImg() {
+    /* スプレッドシートのローダー画像があれば優先して使う */
+    if (window.SITE_SETTINGS?.loaderImgs?.length) {
+      const imgs = window.SITE_SETTINGS.loaderImgs;
+      imgEl.src = imgs[Math.floor(Math.random() * imgs.length)];
+    }
     wrap.style.opacity = '0';
     setTimeout(() => {
       wrap.style.display = 'none';
@@ -928,6 +933,13 @@ function initRender() {
     } else {
       newsListEl.innerHTML = NEWS.slice(0, 3).map(newsCardHTML).join('');
     }
+  }
+
+  /* プロフィール画像をスプレッドシートから適用 */
+  if (window.SITE_SETTINGS?.profileImg) {
+    document.querySelectorAll('#js-profile-photo').forEach(el => {
+      el.src = window.SITE_SETTINGS.profileImg;
+    });
   }
 
   /* 詳細ページ・言語適用 */
