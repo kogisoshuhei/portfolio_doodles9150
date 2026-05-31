@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BOARDGAME_ARTWORK — doodles9150</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./src/style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <header class="header">
+      <a class="header__logo" href="./index.html">doodles9150</a>
+      <nav class="header__nav" aria-label="primary">
+        <a href="./works.html">WORKS</a>
+        <a href="./boardgame.html" class="is-current">BOARDGAME</a>
+        <a href="./profile.html">PROFILE</a>
+        <a href="./index.html#contact">CONTACT</a>
+        <span class="header__spacer"></span>
+      </nav>
+      <button class="header__lang" aria-label="言語切替">EN</button>
+      <span class="header__clock" id="js-clock">--:--:--</span>
+    </header>
+
+    <section class="works-section" aria-label="Boardgame Artwork">
+      <div class="section-header">
+        <strong>BOARDGAME_ARTWORK</strong>
+        <span>-- items</span>
+      </div>
+      <div class="page-intro">
+        <p class="page-intro__text"
+           data-ja="ボードゲームのためにデザインしたカードイラスト・コンポーネントアートワークの一覧です。各作品をクリックすると詳細と制作画像をご覧いただけます。"
+           data-en="A collection of card illustrations and component artwork created for board games. Click each work to view details and production images."</p>
+      </div>
+      <div class="type-filter" id="js-bg-filter">
+        <button class="type-filter__btn is-active" data-filter="all" data-ja="すべて" data-en="All">すべて</button>
+        <button class="type-filter__btn" data-filter="GameDesign">GameDesign</button>
+        <button class="type-filter__btn" data-filter="Artwork">Artwork</button>
+      </div>
+      <div class="boardgame-card-grid"></div>
+    </section>
+
+
+    <footer class="footer">
+      <span>© 2026 doodles9150</span>
+      <span id="js-build-date">----</span>
+    </footer>
+
+  </div>
+  <script src="./src/boardgame-data.js"></script>
+  <script src="./src/sheets-config.js"></script>
+  <script src="./src/sheets-loader.js"></script>
+  <script src="./src/main.js"></script>
+</body>
+</html>

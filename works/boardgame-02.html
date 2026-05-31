@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BOARDGAME — doodles9150</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../src/style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <header class="header">
+      <a class="header__logo" href="../index.html">doodles9150</a>
+      <nav class="header__nav" aria-label="primary">
+        <a href="../works.html">WORKS</a>
+        <a href="../boardgame.html" class="is-current">BOARDGAME</a>
+        <a href="../profile.html">PROFILE</a>
+        <a href="../index.html#contact">CONTACT</a>
+        <span class="header__spacer"></span>
+      </nav>
+      <button class="header__lang" aria-label="言語切替">EN</button>
+      <span class="header__clock" id="js-clock">--:--:--</span>
+    </header>
+
+    <article class="window boardgame-detail" data-boardgame-num="02">
+      <div class="window__titlebar">
+        <span class="window__title" id="js-detail-titlebar">BOARDGAME</span>
+        <a href="../boardgame.html" class="window__back">← BACK</a>
+      </div>
+
+      <div class="work-gallery" id="js-gallery"></div>
+
+      <div class="work-detail__content">
+        <div class="work-detail__main">
+          <h1 class="work-detail__title" id="js-detail-name"></h1>
+          <p class="work-detail__subtitle" id="js-detail-subtitle"></p>
+          <div class="work-detail__desc" id="js-detail-desc"></div>
+          <a href="#" class="work-detail__open-link" id="js-detail-link">OPEN PROJECT →</a>
+          <a href="../boardgame.html" class="work-detail__back-link"
+             data-ja="← BOARDGAME に戻る" data-en="← Back to BOARDGAME">← BOARDGAME に戻る</a>
+        </div>
+        <div class="work-detail__sidebar">
+          <dl class="work-detail__dl" id="js-detail-sidebar"></dl>
+        </div>
+      </div>
+    </article>
+
+    <footer class="footer">
+      <span>© 2026 doodles9150</span>
+      <span id="js-build-date">----</span>
+    </footer>
+
+  </div>
+  <script src="../src/boardgame-data.js"></script>
+  <script src="../src/main.js"></script>
+</body>
+</html>

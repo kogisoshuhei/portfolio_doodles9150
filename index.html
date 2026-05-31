@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>doodles9150 — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="icon" href="./assets/favicon.png" type="image/svg+xml" />
+  <link rel="stylesheet" href="./src/style.css" />
+</head>
+<body>
+  <div id="js-loader" class="loader" aria-hidden="true">
+    <div class="loader__circle-wrap">
+      <svg class="loader__svg" viewBox="0 0 100 100">
+        <circle class="loader__track" cx="50" cy="50" r="40"/>
+        <circle class="loader__bar"   cx="50" cy="50" r="40"/>
+      </svg>
+      <span class="loader__pct" id="js-loader-pct">0%</span>
+      <svg class="loader__check-svg" viewBox="0 0 100 100" aria-hidden="true">
+        <g transform="translate(50,50) scale(0.65) translate(-50,-50)">
+          <path class="loader__check" d="M 26 54 L 43 70 L 74 33"/>
+        </g>
+      </svg>
+    </div>
+    <img class="loader__img" src="" alt="" />
+  </div>
+
+  <div id="app">
+
+    <!-- ── HEADER ───────────────────────────────────────── -->
+    <header class="header">
+      <a class="header__logo" href="./index.html">doodles9150</a>
+      <nav class="header__nav" aria-label="primary">
+        <a href="./works.html">WORKS</a>
+        <a href="./boardgame.html">BOARDGAME</a>
+        <a href="./profile.html">PROFILE</a>
+        <a href="#contact">CONTACT</a>
+        <span class="header__spacer"></span>
+      </nav>
+      <button class="header__lang" aria-label="言語切替">EN</button>
+      <span class="header__clock" id="js-clock">--:--:--</span>
+    </header>
+
+    <!-- ── SLIDESHOW ────────────────────────────────────── -->
+    <div class="window slideshow-window" id="js-slideshow" aria-label="Works slideshow">
+      <div class="window__titlebar">
+        <span class="window__title">PICKUP</span>
+        <span class="slideshow__counter" aria-live="polite">01 / 04</span>
+      </div>
+
+      <div class="slideshow__stage">
+        <button class="slideshow__btn slideshow__prev" aria-label="前のスライド">←</button>
+
+        <div class="slideshow__viewport">
+          <div class="slideshow__track">
+          </div>
+        </div>
+
+        <button class="slideshow__btn slideshow__next" aria-label="次のスライド">→</button>
+      </div>
+
+      <div class="slideshow__progress-track" aria-hidden="true">
+        <div class="slideshow__progress"></div>
+      </div>
+
+      <div class="slideshow__caption">
+        <div class="slideshow__caption-left" id="js-caption-left">
+          <span class="slideshow__reel-clip"><span class="slideshow__num"  id="js-slide-num">01</span></span>
+          <span class="slideshow__reel-clip"><span class="slideshow__name" id="js-slide-name">PROJECT_ALPHA</span></span>
+          <span class="slideshow__type" id="js-slide-type" data-type="Illust">Illust</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── NEWS ──────────────────────────────────────────── -->
+    <section class="window news-window" aria-label="News">
+      <div class="window__titlebar">
+        <span class="window__title">NEWS</span>
+        <a href="./news.html" class="window__back"
+           data-ja="すべて見る →" data-en="View all →">すべて見る →</a>
+      </div>
+      <div class="news-card-grid" id="js-news-list"></div>
+    </section>
+
+    <!-- ── PROFILE ───────────────────────────────────────── -->
+    <section class="window profile-window" aria-label="Profile">
+      <div class="window__titlebar">
+        <span class="window__title">PROFILE</span>
+        <a href="./profile.html" class="window__back">DETAIL →</a>
+      </div>
+
+      <div class="profile-brief">
+        <figure class="profile-brief__photo">
+          <img src="./assets/profile/photo.jpg" alt="doodles9150" />
+        </figure>
+        <div class="profile-brief__body">
+          <p class="profile-brief__name">doodles9150</p>
+          <p class="profile-brief__role">Illustrator / Creator / Animator</p>
+          <ul class="tag-list">
+            <li class="tag" data-type="Illust">Illust</li>
+            <li class="tag" data-type="Animation">Animation</li>
+            <li class="tag" data-type="3DModeling">3DModeling</li>
+            <li class="tag" data-type="Boardgame">Boardgame</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CONTACT ──────────────────────────────────────── -->
+    <section id="contact" class="window contact-window" aria-label="Contact">
+      <div class="window__titlebar">
+        <span class="window__title">CONTACT</span>
+      </div>
+
+      <form class="contact-form" action="https://formspree.io/f/xlgvvezg" method="POST">
+        <input type="hidden" name="_subject" value="【ポートフォリオ】お問い合わせ" />
+        <input type="hidden" name="_next" value="./thanks.html" />
+
+        <fieldset class="contact-form__fieldset">
+          <legend class="contact-form__legend"
+                  data-ja="お問い合わせ項目" data-en="Inquiry Type">お問い合わせ項目</legend>
+          <label class="contact-form__radio">
+            <input type="radio" name="type" value="consultation" checked />
+            <span data-ja="ご相談・お見積り依頼" data-en="Consultation / Quote Request">ご相談・お見積り依頼</span>
+          </label>
+          <label class="contact-form__radio">
+            <input type="radio" name="type" value="other" />
+            <span data-ja="その他" data-en="Other">その他</span>
+          </label>
+        </fieldset>
+
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="cf-name"
+                 data-ja="お名前" data-en="Name">お名前</label>
+          <input class="contact-form__input" type="text" id="cf-name"
+                 name="name" required autocomplete="name"
+                 placeholder="shuhei kogiso" />
+        </div>
+
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="cf-email"
+                 data-ja="メールアドレス" data-en="Email">メールアドレス</label>
+          <input class="contact-form__input" type="email" id="cf-email"
+                 name="email" required autocomplete="email"
+                 placeholder="doodles9150@email.com" />
+        </div>
+
+        <div class="contact-form__field">
+          <label class="contact-form__label" for="cf-message"
+                 data-ja="ご相談内容" data-en="Message">ご相談内容</label>
+          <textarea class="contact-form__textarea" id="cf-message"
+                    name="message" required rows="7"
+                    data-ja-ph="お問い合わせ内容をご記入ください。"
+                    data-en-ph="Please enter your message."
+                    placeholder="お問い合わせ内容をご記入ください。"></textarea>
+          <label class="contact-form__checkbox">
+            <input type="checkbox" name="privacy" required />
+            <span
+              data-ja-html='<a href="./privacy.html" target="_blank" rel="noopener">プライバシーポリシー</a>に同意します。'
+              data-en-html='I agree to the <a href="./privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.'><a href="./privacy.html" target="_blank" rel="noopener">プライバシーポリシー</a>に同意します。</span>
+          </label>
+        </div>
+
+        <button class="contact-form__submit" type="submit"
+                data-ja="送信する →" data-en="Send →">送信する →</button>
+
+      </form>
+    </section>
+
+    <footer class="footer">
+      <span>© 2026 doodles9150</span>
+      <span id="js-build-date">----</span>
+    </footer>
+
+  </div>
+  <script src="./src/works-data.js"></script>
+  <script src="./src/news-data.js"></script>
+  <script src="./src/boardgame-data.js"></script>
+  <script src="./src/sheets-config.js"></script>
+  <script src="./src/sheets-loader.js"></script>
+  <script src="./src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PROFILE — doodles9150</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./src/style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <header class="header">
+      <a class="header__logo" href="./index.html">doodles9150</a>
+      <nav class="header__nav" aria-label="primary">
+        <a href="./works.html">WORKS</a>
+        <a href="./boardgame.html">BOARDGAME</a>
+        <a href="./profile.html" class="is-current">PROFILE</a>
+        <a href="./index.html#contact">CONTACT</a>
+        <span class="header__spacer"></span>
+      </nav>
+      <button class="header__lang" aria-label="言語切替">EN</button>
+      <span class="header__clock" id="js-clock">--:--:--</span>
+    </header>
+
+    <section class="window profile-window" aria-label="Profile">
+      <div class="window__titlebar">
+        <span class="window__title">PROFILE</span>
+        <div class="window__ctrls" aria-hidden="true">
+          <span class="window__ctrl">_</span>
+          <span class="window__ctrl">□</span>
+          <span class="window__ctrl">×</span>
+        </div>
+      </div>
+
+      <div class="profile-layout">
+
+        <figure class="profile-photo">
+          <img src="./assets/profile/photo.jpg" alt="doodles9150" />
+        </figure>
+
+        <div class="profile-text">
+          <h1 class="profile-name">doodles9150</h1>
+          <p class="profile-role">Designer / Developer / Creator</p>
+
+          <div class="profile-bio">
+            <p data-ja="東京を拠点に活動するデザイナー。インタラクティブなウェブ体験とグラフィックデザインを専門とする。ビジュアルとコードの境界を探ることに興味を持つ。"
+               data-en="A Tokyo-based designer specializing in interactive web experiences and graphic design, with an interest in exploring the boundary between visual and code.">東京を拠点に活動するデザイナー。インタラクティブなウェブ体験と
+              グラフィックデザインを専門とする。ビジュアルとコードの境界を
+              探ることに興味を持つ。</p>
+            <p data-ja="大学でグラフィックデザインを学んだ後、デジタルエージェンシーを経て独立。現在はブランドのアイデンティティ設計からウェブ開発・映像制作まで、メディアを横断した仕事を手がけている。"
+               data-en="After studying graphic design at university and working at a digital agency, went independent. Currently handles work across media, from brand identity design to web development and video production.">大学でグラフィックデザインを学んだ後、デジタルエージェンシーを経て
+              独立。現在はブランドのアイデンティティ設計からウェブ開発・映像制作まで、
+              メディアを横断した仕事を手がけている。</p>
+            <p data-ja="「なんとなく良い」と感じる瞬間の背後にある理由を言語化することと、意図を持って曖昧さを残すことの両方を大切にしている。"
+               data-en='Values both articulating the reasons behind a vague sense of "this just feels right," and the deliberate act of leaving some things intentionally ambiguous.'>「なんとなく良い」と感じる瞬間の背後にある理由を言語化することと、
+              意図を持って曖昧さを残すことの両方を大切にしている。</p>
+          </div>
+
+          <ul class="tag-list">
+            <li class="tag">UI/UX</li>
+            <li class="tag">WEB_DEV</li>
+            <li class="tag">GRAPHIC</li>
+            <li class="tag">MOTION</li>
+            <li class="tag">PRINT</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>© 2026 doodles9150</span>
+      <span id="js-build-date">----</span>
+    </footer>
+
+  </div>
+  <script src="./src/main.js"></script>
+</body>
+</html>
