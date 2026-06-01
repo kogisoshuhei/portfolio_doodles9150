@@ -1221,6 +1221,7 @@ img { display: block; max-width: 100%; }
   width:        100%;
   aspect-ratio: 1;
   overflow:     hidden;
+  flex-shrink:  0; /* flex列の中でアスペクト比が潰れないよう縮小を禁止 */
 }
 .boardgame-card__img {
   position:   absolute; /* inset: 0 で親の確定サイズを直接参照 — height:100% のSafariバグを回避 */
