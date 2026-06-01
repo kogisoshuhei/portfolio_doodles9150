@@ -467,15 +467,18 @@ function renderSlides(el) {
     .slice()
     .sort(() => Math.random() - 0.5)
     .slice(0, 5);
-  track.innerHTML = items.map((w, i) =>
-    `<div class="slideshow__slide"
+  track.innerHTML = items.map((w, i) => {
+    const href = w.href || (w.type === 'Boardgame'
+      ? `./works/boardgame-${w.num}.html`
+      : `./works/${w.num}.html`);
+    return `<div class="slideshow__slide"
           data-num="${w.num}" data-name="${w.name}"
-          data-type="${w.type}" data-href="${w.href}">
+          data-type="${w.type}" data-href="${href}">
        <figure class="slideshow__fig">
          <img src="${w.img}" alt="${w.name}" loading="${i === 0 ? 'eager' : 'lazy'}" />
        </figure>
-     </div>`
-  ).join('');
+     </div>`;
+  }).join('');
 
   const firstSlide = track.firstElementChild;
   if (firstSlide) {

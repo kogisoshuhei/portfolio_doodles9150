@@ -311,12 +311,8 @@ img { display: block; max-width: 100%; }
   transition: filter 0.35s ease;
 }
 
-/* hover: active slide のみブラー + オーバーレイ表示 */
+/* hover: active slide のみブラー + オーバーレイ表示 (マウス環境のみ) */
 .slideshow__slide.is-active .slideshow__fig { cursor: pointer; }
-
-.slideshow__slide.is-active .slideshow__fig:hover img {
-  filter: blur(6px) brightness(0.62);
-}
 
 /* overlay: title + VIEW cta */
 .slideshow__fig-overlay {
@@ -332,8 +328,13 @@ img { display: block; max-width: 100%; }
   pointer-events: none;
 }
 
-.slideshow__slide.is-active .slideshow__fig:hover .slideshow__fig-overlay {
-  opacity: 1;
+@media (hover: hover) {
+  .slideshow__slide.is-active .slideshow__fig:hover img {
+    filter: blur(6px) brightness(0.62);
+  }
+  .slideshow__slide.is-active .slideshow__fig:hover .slideshow__fig-overlay {
+    opacity: 1;
+  }
 }
 
 .slideshow__fig-overlay__title {
@@ -1207,7 +1208,14 @@ img { display: block; max-width: 100%; }
   color: var(--fg);
   transition: background 0.15s;
 }
-.boardgame-card:hover { background: var(--fg); color: var(--bg); }
+@media (hover: hover) {
+  .boardgame-card:hover                        { background: var(--fg); color: var(--bg); }
+  .boardgame-card:hover .boardgame-card__img   { filter: blur(5px) brightness(0.6); }
+  .boardgame-card:hover .boardgame-card__overlay { opacity: 1; }
+  .boardgame-card:hover .boardgame-card__label { border-top-color: var(--bg); }
+  .boardgame-card:hover .boardgame-card__cat   { color: var(--bg); border-color: var(--bg); }
+  .boardgame-card:hover .boardgame-card__num   { color: var(--bg); }
+}
 .boardgame-card__thumb {
   position:     relative;
   width:        100%;
@@ -1223,9 +1231,6 @@ img { display: block; max-width: 100%; }
   display:    block;
   transition: filter 0.3s ease;
 }
-.boardgame-card:hover .boardgame-card__img {
-  filter: blur(5px) brightness(0.6);
-}
 .boardgame-card__overlay {
   position: absolute;
   inset: 0;
@@ -1239,7 +1244,6 @@ img { display: block; max-width: 100%; }
   pointer-events: none;
   padding: 8px;
 }
-.boardgame-card:hover .boardgame-card__overlay { opacity: 1; }
 .boardgame-card__overlay-name {
   font-size: var(--size-xs);
   font-weight: 700;
@@ -1296,7 +1300,6 @@ img { display: block; max-width: 100%; }
   letter-spacing: var(--ls-wide);
   border-top:     var(--border);
 }
-.boardgame-card:hover .boardgame-card__label { border-top-color: var(--bg); }
 .boardgame-card__label-row {
   display: flex;
   align-items: center;
@@ -1322,12 +1325,10 @@ img { display: block; max-width: 100%; }
 }
 .boardgame-card__cat[data-cat="GameDesign"] { color: #2563EB; }
 .boardgame-card__cat[data-cat="Artwork"]    { color: #DB2777; }
-.boardgame-card:hover .boardgame-card__cat  { color: var(--bg); border-color: var(--bg); }
 .boardgame-card__num {
   flex-shrink: 0;
   color: var(--fg-dim);
 }
-.boardgame-card:hover .boardgame-card__num { color: var(--bg); }
 
 /* ════════════════════════════════════════════════════════════
    BOARDGAME IMAGE GRID (詳細ページ)
