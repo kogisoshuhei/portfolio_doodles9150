@@ -117,6 +117,51 @@ function setLang(lang) {
   applyLang(lang);
 }
 
+/* ── Page Transition ────────────────────────────────────────── */
+(function () {
+  const SS_KEY = 'pt';
+
+  function makeOverlay() {
+    const ov = document.createElement('div');
+    ov.id = 'js-pt-overlay';
+    const bar = document.createElement('div');
+    bar.id = 'js-pt-bar';
+    ov.appendChild(bar);
+    document.body.appendChild(ov);
+    return { ov, bar };
+  }
+
+  /* 新しいページに着地したとき: バーを完了させてフェードアウト */
+  if (sessionStorage.getItem(SS_KEY)) {
+    sessionStorage.removeItem(SS_KEY);
+    const { ov, bar } = makeOverlay();
+    bar.style.width = '75%';           /* 遷移前に進んでいた分を再現 */
+    requestAnimationFrame(() => {
+      bar.style.transition = 'width 0.25s ease';
+      bar.style.width = '100%';
+      setTimeout(() => {
+        ov.classList.add('is-out');
+        setTimeout(() => ov.remove(), 380);
+      }, 260);
+    });
+  }
+
+  /* リンククリック時: オーバーレイを表示してバーを進める */
+  document.addEventListener('click', function (e) {
+    const a = e.target.closest('a[href]');
+    if (!a || a.target === '_blank') return;
+    const href = a.getAttribute('href');
+    if (!href || /^(https?:\/\/|mailto:|tel:|javascript:|#)/.test(href)) return;
+
+    sessionStorage.setItem(SS_KEY, '1');
+    const { bar } = makeOverlay();
+    /* double rAF で 0% が描画されてから transition を開始 */
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      bar.style.width = '80%';
+    }));
+  });
+})();
+
 /* ── Loader ─────────────────────────────────────────────────── */
 (function initLoader() {
   const loader = document.getElementById('js-loader');

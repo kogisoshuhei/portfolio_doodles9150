@@ -1395,3 +1395,29 @@ img { display: block; max-width: 100%; }
   transition: background 0.15s;
 }
 .lightbox__close:hover { background: rgba(255, 255, 255, 0.15); }
+
+/* ════════════════════════════════════════════════════════════
+   PAGE TRANSITION OVERLAY
+   ════════════════════════════════════════════════════════════ */
+#js-pt-overlay {
+  position:       fixed;
+  inset:          0;
+  z-index:        9000;
+  background:     var(--bg);
+  pointer-events: all;
+  opacity:        1;
+  transition:     opacity 0.35s ease;
+}
+#js-pt-overlay.is-out {
+  opacity:        0;
+  pointer-events: none;
+}
+#js-pt-bar {
+  position:   absolute;
+  top:        0;
+  left:       0;
+  height:     2px;
+  width:      0%;
+  background: var(--fg);
+  transition: width 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
