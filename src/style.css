@@ -614,6 +614,35 @@ img { display: block; max-width: 100%; }
   line-height: var(--lh);
 }
 
+/* TOP ページ用コンパクト表示 (3列グリッド・画像トリミング) */
+.news-card-grid--compact {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  flex-direction: unset;
+}
+.news-card-grid--compact .news-card {
+  flex-direction: column;
+}
+.news-card-grid--compact .news-card__thumb {
+  flex: none;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-right: none;
+  border-bottom: var(--border);
+}
+.news-card-grid--compact .news-card__thumb img {
+  object-fit: cover;
+}
+.news-card-grid--compact .news-card__body {
+  padding: var(--pad-sm) var(--pad);
+}
+.news-card-grid--compact .news-card__desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .news-pagination {
   display: flex;
   gap: 6px;
@@ -1154,6 +1183,7 @@ img { display: block; max-width: 100%; }
   .boardgame-card-grid      { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .news-card                { flex-direction: column; }
   .news-card__thumb         { flex: none; width: 100%; aspect-ratio: 16/9; border-right: none; border-bottom: var(--border); }
+  .news-card-grid--compact  { grid-template-columns: 1fr; }
 
   /* ── ヘッダー 2行レイアウト ───────────────────── */
   .header                   { flex-wrap: wrap; }
