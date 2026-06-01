@@ -1200,8 +1200,7 @@ img { display: block; max-width: 100%; }
   border-left: var(--border);
 }
 .boardgame-card {
-  display: flex;
-  flex-direction: column;
+  display: block; /* flex をやめて block に — aspect-ratio が flex に潰されなくなる */
   border-right: var(--border);
   border-bottom: var(--border);
   text-decoration: none;
@@ -1219,9 +1218,9 @@ img { display: block; max-width: 100%; }
 .boardgame-card__thumb {
   position:     relative;
   width:        100%;
-  aspect-ratio: 1;
+  aspect-ratio: 1 / 1;
   overflow:     hidden;
-  flex-shrink:  0; /* flex列の中でアスペクト比が潰れないよう縮小を禁止 */
+  display:      block; /* block に明示して aspect-ratio を確実に適用 */
 }
 .boardgame-card__img {
   position:   absolute; /* inset: 0 で親の確定サイズを直接参照 — height:100% のSafariバグを回避 */

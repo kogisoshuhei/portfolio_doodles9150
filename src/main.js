@@ -881,17 +881,6 @@ document.querySelectorAll('.header__lang').forEach(btn => {
 });
 
 function initRender() {
-  /* Slideshow */
-  const slideshowEl = document.getElementById('js-slideshow');
-  if (slideshowEl) {
-    renderSlides(slideshowEl);
-    const ss = new Slideshow(slideshowEl, 6000);
-    if (document.getElementById('js-loader')) {
-      ss.pause();
-      document.addEventListener('loaderDone', () => ss.resume(), { once: true });
-    }
-  }
-
   /* Works / Boardgame グリッド */
   const worksGridEl = document.querySelector('.top-works-grid');
   if (worksGridEl) renderWorkCards(worksGridEl, w => w.type !== 'Boardgame');
@@ -950,6 +939,18 @@ function initRender() {
   renderBoardgameDetail();
   applyLang(_lang);
 }
+
+/* スライドショーはローカルデータで即座に描画 — sheets 待ちでローディング後に空白にならないよう */
+(function () {
+  const slideshowEl = document.getElementById('js-slideshow');
+  if (!slideshowEl) return;
+  renderSlides(slideshowEl);
+  const ss = new Slideshow(slideshowEl, 6000);
+  if (document.getElementById('js-loader')) {
+    ss.pause();
+    document.addEventListener('loaderDone', () => ss.resume(), { once: true });
+  }
+})();
 
 /* sheets-config.js が読み込まれていれば sheetsReady を待つ、なければ即描画 */
 if (typeof SHEETS_CONFIG !== 'undefined') {
