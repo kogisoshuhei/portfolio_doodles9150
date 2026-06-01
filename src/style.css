@@ -44,7 +44,7 @@ html {
   scroll-behavior: smooth;
 }
 
-body { min-height: 100vh; }
+body { min-height: 100vh; overflow-x: clip; }
 html { overflow-y: scroll; }
 
 body::before {
@@ -1148,6 +1148,7 @@ img { display: block; max-width: 100%; }
    RESPONSIVE
    ════════════════════════════════════════════════════════════ */
 @media (max-width: 720px) {
+  /* ── グリッド ─────────────────────────────────── */
   .top-works-grid           { grid-template-columns: 1fr; }
   .profile-layout           { grid-template-columns: 1fr; }
   .profile-photo            { border-right: none; border-bottom: var(--border); aspect-ratio: 4/3; }
@@ -1157,19 +1158,35 @@ img { display: block; max-width: 100%; }
   .boardgame-card-grid      { grid-template-columns: repeat(2, 1fr); }
   .news-card-grid           { grid-template-columns: repeat(2, 1fr); }
 
-  /* スライドショー: モバイルでは覗き見パディングを縮小・矢印を非表示 */
-  .slideshow__viewport      { padding: 0 20px; }
-  .slideshow__btn           { display: none; }
+  /* ── ヘッダー 2行レイアウト ───────────────────── */
+  .header                   { flex-wrap: wrap; }
+  .header__logo             { flex: 1; }           /* ロゴがスペースを取り lang/clock を右寄せ */
+  .header__nav {
+    order:      10;                                /* 2行目へ */
+    flex:       0 0 100%;
+    border-top: var(--border);
+  }
+  .header__nav a {
+    flex:             1;
+    justify-content:  center;
+    padding:          8px 4px;
+    border-right:     var(--border);
+  }
+  .header__nav a:last-child  { border-right: none; }
+  .header__spacer            { display: none; }   /* 2行目では不要 */
+  .header__sns               { display: none; }   /* SNSアイコンはモバイルでは非表示 */
+
+  /* ── スライドショー: フル幅・矢印をタッチ対応に ─ */
+  .slideshow__viewport      { padding: 0; }
+  .slideshow__btn           { width: 44px; height: 52px; }  /* 最小タッチ領域を確保 */
+  .slideshow__prev          { left: 4px; }
+  .slideshow__next          { right: 4px; }
 }
 
 @media (max-width: 480px) {
-  .header__clock { display: none; }
-  .header__nav a { padding: 7px 10px; }
+  .header__clock            { display: none; }
   .boardgame-img-grid       { grid-template-columns: repeat(2, 1fr); }
   .boardgame-card-grid      { grid-template-columns: repeat(2, 1fr); }
-
-  /* スライドショー: 小画面では覗き見を無効化 */
-  .slideshow__viewport      { padding: 0; }
 }
 
 /* ════════════════════════════════════════════════════════════
