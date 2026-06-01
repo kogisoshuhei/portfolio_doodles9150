@@ -131,22 +131,21 @@ function setLang(lang) {
     return { ov, bar };
   }
 
-  /* 新しいページに着地したとき: バーを完了させてフェードアウト */
+  /* 新しいページに着地したとき: 0% → 100% を描画してフェードアウト */
   if (sessionStorage.getItem(SS_KEY)) {
     sessionStorage.removeItem(SS_KEY);
     const { ov, bar } = makeOverlay();
-    bar.style.width = '75%';           /* 遷移前に進んでいた分を再現 */
-    requestAnimationFrame(() => {
-      bar.style.transition = 'width 0.25s ease';
+    /* double rAF: 1フレーム目で bar が width:0% の状態を描画させてから遷移開始 */
+    requestAnimationFrame(() => requestAnimationFrame(() => {
       bar.style.width = '100%';
       setTimeout(() => {
         ov.classList.add('is-out');
         setTimeout(() => ov.remove(), 380);
-      }, 260);
-    });
+      }, 500);
+    }));
   }
 
-  /* リンククリック時: オーバーレイを表示してバーを進める */
+  /* リンククリック時: 白いオーバーレイを表示 */
   document.addEventListener('click', function (e) {
     const a = e.target.closest('a[href]');
     if (!a || a.target === '_blank') return;
@@ -154,11 +153,7 @@ function setLang(lang) {
     if (!href || /^(https?:\/\/|mailto:|tel:|javascript:|#)/.test(href)) return;
 
     sessionStorage.setItem(SS_KEY, '1');
-    const { bar } = makeOverlay();
-    /* double rAF で 0% が描画されてから transition を開始 */
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      bar.style.width = '80%';
-    }));
+    makeOverlay();
   });
 })();
 
