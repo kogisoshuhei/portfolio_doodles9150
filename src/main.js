@@ -182,15 +182,15 @@ function setLang(lang) {
   const imgEl  = loader.querySelector('.loader__img');
   const C      = 251.33; /* stroke-dasharray: 2π × 40 */
 
-  /* ローダー画像を自動検出 (01〜09, jpg/jpeg/png/gif/webp 対応) */
+  /* ローダー画像を自動検出 (01〜09, jpg/jpeg/png/gif/webp 対応) — srcのセットは showImg() に一本化 */
+  let _localLoaderImgs = [];
   if (imgEl) {
     const LOADER_BASE = './assets/profile/loader';
     const LOADER_EXTS = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
     const found = {};
     let pending = 9 * LOADER_EXTS.length;
     const finish = () => {
-      const imgs = Array.from({length: 9}, (_, i) => found[String(i + 1).padStart(2, '0')]).filter(Boolean);
-      if (imgs.length) imgEl.src = imgs[Math.floor(Math.random() * imgs.length)];
+      _localLoaderImgs = Array.from({length: 9}, (_, i) => found[String(i + 1).padStart(2, '0')]).filter(Boolean);
     };
     for (let i = 1; i <= 9; i++) {
       const num = String(i).padStart(2, '0');
@@ -228,11 +228,11 @@ function setLang(lang) {
   }
 
   function showImg() {
-    /* スプレッドシートのローダー画像があれば優先して使う */
-    if (window.SITE_SETTINGS?.loaderImgs?.length) {
-      const imgs = window.SITE_SETTINGS.loaderImgs;
-      imgEl.src = imgs[Math.floor(Math.random() * imgs.length)];
-    }
+    /* シート画像を優先、なければローカル画像 — ここで1度だけ src をセット */
+    const imgs = window.SITE_SETTINGS?.loaderImgs?.length
+      ? window.SITE_SETTINGS.loaderImgs
+      : _localLoaderImgs;
+    if (imgs.length) imgEl.src = imgs[Math.floor(Math.random() * imgs.length)];
     wrap.style.opacity = '0';
     setTimeout(() => {
       wrap.style.display = 'none';
