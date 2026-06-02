@@ -16,4 +16,5 @@ const SHEETS_CONFIG = {
   boardgameUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSyCQnzu_OMeT9LI1XzA-MGyCX5zxQnTUZP5JB7-muIFwMsjhxeV3l6AtJ1EMtltO-O6S08pv15joMy/pub?gid=231028081&single=true&output=csv', /* BOARDGAME シートの CSV 公開URL */
   newsUrl:      'https://docs.google.com/spreadsheets/d/e/2PACX-1vSyCQnzu_OMeT9LI1XzA-MGyCX5zxQnTUZP5JB7-muIFwMsjhxeV3l6AtJ1EMtltO-O6S08pv15joMy/pub?gid=1198400763&single=true&output=csv',  /* NEWS シートの CSV 公開URL */
   settingsUrl:  'https://docs.google.com/spreadsheets/d/e/2PACX-1vSyCQnzu_OMeT9LI1XzA-MGyCX5zxQnTUZP5JB7-muIFwMsjhxeV3l6AtJ1EMtltO-O6S08pv15joMy/pub?gid=581671513&single=true&output=csv',  /* SETTINGS シートの CSV 公開URL (プロフィール画像・ローダー画像) */
+  profileUrl:   'https://docs.google.com/spreadsheets/d/e/2PACX-1vSyCQnzu_OMeT9LI1XzA-MGyCX5zxQnTUZP5JB7-muIFwMsjhxeV3l6AtJ1EMtltO-O6S08pv15joMy/pub?gid=1068198597&single=true&output=csv',  /* PROFILE シートの CSV 公開URL (名前・肩書き・自己紹介) */
 };

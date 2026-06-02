@@ -5,7 +5,7 @@
 (function () {
   if (typeof SHEETS_CONFIG === 'undefined' ||
       (!SHEETS_CONFIG.worksUrl && !SHEETS_CONFIG.boardgameUrl &&
-       !SHEETS_CONFIG.newsUrl  && !SHEETS_CONFIG.settingsUrl)) {
+       !SHEETS_CONFIG.newsUrl  && !SHEETS_CONFIG.settingsUrl && !SHEETS_CONFIG.profileUrl)) {
     document.dispatchEvent(new Event('sheetsReady'));
     return;
   }
@@ -181,7 +181,8 @@
     fetchCsv(SHEETS_CONFIG.boardgameUrl),
     fetchCsv(SHEETS_CONFIG.newsUrl),
     fetchCsv(SHEETS_CONFIG.settingsUrl),
-  ]).then(function ([worksCsv, bgCsv, newsCsv, settingsCsv]) {
+    fetchCsv(SHEETS_CONFIG.profileUrl),
+  ]).then(function ([worksCsv, bgCsv, newsCsv, settingsCsv, profileCsv]) {
     if (worksCsv) {
       const data = parseCSV(worksCsv, 'works');
       if (data) WORKS = data;
@@ -196,7 +197,11 @@
     }
     if (settingsCsv) {
       const data = parseSettings(settingsCsv);
-      if (data) window.SITE_SETTINGS = data;
+      if (data) window.SITE_SETTINGS = Object.assign(window.SITE_SETTINGS || {}, data);
+    }
+    if (profileCsv) {
+      const data = parseSettings(profileCsv);
+      if (data) window.SITE_SETTINGS = Object.assign(window.SITE_SETTINGS || {}, data);
     }
   }).catch(function () {
     /* ネットワークエラー → ローカルデータで続行 */
