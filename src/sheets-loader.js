@@ -175,7 +175,7 @@
     }
     if (newsCsv) {
       const data = parseCSV(newsCsv, 'news');
-      if (data) NEWS = data;
+      if (data) NEWS = data.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
     }
     if (settingsCsv) {
       const data = parseSettings(settingsCsv);
