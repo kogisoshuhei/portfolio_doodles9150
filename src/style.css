@@ -114,7 +114,7 @@ img { display: block; max-width: 100%; }
   letter-spacing: var(--ls-wide);
   transition:  background 0.08s, color 0.08s;
 }
-.header__nav a:hover       { color: rgba(0,0,0,0.55); text-decoration: none; }
+.header__nav a:hover       { background: rgba(0,0,0,0.08); text-decoration: none; }
 .header__nav a.is-current  { background: var(--fg); color: var(--bg); }
 
 .header__spacer { flex: 1; }
