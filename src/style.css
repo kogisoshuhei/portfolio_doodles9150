@@ -49,16 +49,16 @@ body {
   overflow-x: clip;
   background-color: var(--bg);
   background-image:
-    radial-gradient(circle, rgba(0,0,0,0.18) 1.5px, transparent 1.5px),
-    radial-gradient(circle, rgba(0,0,0,0.06) 3px,   transparent 3px);
-  background-size: 28px 28px;
+    radial-gradient(circle, rgba(0,0,0,0.30) 20px, transparent 20px),
+    radial-gradient(circle, rgba(0,0,0,0.06) 20px, transparent 20px);
+  background-size: 80px 80px;
   background-position: 0 0, 4px 4px;
   animation: dot-drift 20s linear infinite;
 }
 
 @keyframes dot-drift {
-  from { background-position: 0 0,    4px  4px; }
-  to   { background-position: 28px 28px, 32px 32px; }
+  from { background-position: 0 0,      4px  4px; }
+  to   { background-position: -80px 80px, -76px 84px; }
 }
 html { overflow-y: scroll; }
 
