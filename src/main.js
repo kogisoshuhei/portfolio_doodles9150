@@ -236,7 +236,8 @@ function setLang(lang) {
     wrap.style.opacity = '0';
     setTimeout(() => {
       wrap.style.display = 'none';
-      imgEl.classList.add('is-visible'); /* spring アニメーション開始 (0.45s) */
+      imgEl.classList.add('is-visible');   /* spring アニメーション開始 (0.45s) */
+      loader.classList.add('is-img-visible'); /* 白円ブルームを発火 */
 
       /* spring 完了 (450ms) + 1秒表示してからフェードアウト */
       setTimeout(() => {

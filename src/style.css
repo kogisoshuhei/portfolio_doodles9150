@@ -1083,6 +1083,27 @@ img { display: block; max-width: 100%; }
   align-items: center;
   justify-content: center;
 }
+.loader::before {
+  content: '';
+  position: absolute;
+  width: min(480px, 85vw);
+  height: min(480px, 85vw);
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0;
+  transform: scale(0.5);
+  pointer-events: none;
+  z-index: 0;
+}
+.loader.is-img-visible::before {
+  animation: loaderBloom 2.8s ease-in-out infinite;
+}
+@keyframes loaderBloom {
+  0%   { transform: scale(0.72); opacity: 0;    }
+  25%  { transform: scale(0.92); opacity: 0.88; }
+  60%  { transform: scale(1.08); opacity: 0.72; }
+  100% { transform: scale(0.72); opacity: 0;    }
+}
 
 .loader__circle-wrap {
   position: relative;
@@ -1158,6 +1179,7 @@ img { display: block; max-width: 100%; }
   object-fit: contain;
   opacity: 0;
   transform: scale(0);
+  z-index: 1;
 }
 .loader__img.is-visible {
   animation: loaderSpring 0.45s cubic-bezier(0.2, 0, 0.2, 1) forwards;
