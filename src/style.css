@@ -223,11 +223,11 @@ img { display: block; max-width: 100%; }
   font-size: var(--size-xs); letter-spacing: var(--ls-wide);
   padding: 2px 8px; border: var(--border);
 }
-.tag[data-type="Illust"]     { background: #DB2777; color: #fff; border-color: #DB2777; }
-.tag[data-type="Animation"]  { background: #2563EB; color: #fff; border-color: #2563EB; }
-.tag[data-type="3DModeling"] { background: #059669; color: #fff; border-color: #059669; }
-.tag[data-type="Boardgame"]  { background: #D97706; color: #fff; border-color: #D97706; }
-.tag[data-type="other"]      { background: #6B7280; color: #fff; border-color: #6B7280; }
+.tag[data-type="Illust"]     { background: #D4638C; color: #fff; border-color: #D4638C; }
+.tag[data-type="Animation"]  { background: #5588D6; color: #fff; border-color: #5588D6; }
+.tag[data-type="3DModeling"] { background: #3DAB7C; color: #fff; border-color: #3DAB7C; }
+.tag[data-type="Boardgame"]  { background: #D4923A; color: #fff; border-color: #D4923A; }
+.tag[data-type="other"]      { background: #8896A6; color: #fff; border-color: #8896A6; }
 
 /* ════════════════════════════════════════════════════════════
    SECTION HEADER  (label strip)
@@ -415,11 +415,11 @@ img { display: block; max-width: 100%; }
 .slideshow__type { font-size: var(--size-xs); letter-spacing: var(--ls-wide);
   border: 1px solid currentColor; padding: 1px 6px;
 }
-.slideshow__type[data-type="Illust"]     { background: #DB2777; color: #fff; border-color: #DB2777; }
-.slideshow__type[data-type="Animation"]  { background: #2563EB; color: #fff; border-color: #2563EB; }
-.slideshow__type[data-type="3DModeling"] { background: #059669; color: #fff; border-color: #059669; }
-.slideshow__type[data-type="Boardgame"]  { background: #D97706; color: #fff; border-color: #D97706; }
-.slideshow__type[data-type="other"]      { background: #6B7280; color: #fff; border-color: #6B7280; }
+.slideshow__type[data-type="Illust"]     { background: #D4638C; color: #fff; border-color: #D4638C; }
+.slideshow__type[data-type="Animation"]  { background: #5588D6; color: #fff; border-color: #5588D6; }
+.slideshow__type[data-type="3DModeling"] { background: #3DAB7C; color: #fff; border-color: #3DAB7C; }
+.slideshow__type[data-type="Boardgame"]  { background: #D4923A; color: #fff; border-color: #D4923A; }
+.slideshow__type[data-type="other"]      { background: #8896A6; color: #fff; border-color: #8896A6; }
 .slideshow__type.is-fade-out { animation: typeFadeOut 0.18s ease-in  forwards; }
 .slideshow__type.is-fade-in  { animation: typeFadeIn  0.18s ease-out forwards; }
 
@@ -507,11 +507,11 @@ img { display: block; max-width: 100%; }
 }
 
 /* category colors — work cards */
-.work-card__type[data-type="Illust"]     { background: #DB2777; color: #fff; border-color: #DB2777; }
-.work-card__type[data-type="Animation"]  { background: #2563EB; color: #fff; border-color: #2563EB; }
-.work-card__type[data-type="3DModeling"] { background: #059669; color: #fff; border-color: #059669; }
-.work-card__type[data-type="Boardgame"]  { background: #D97706; color: #fff; border-color: #D97706; }
-.work-card__type[data-type="other"]      { background: #6B7280; color: #fff; border-color: #6B7280; }
+.work-card__type[data-type="Illust"]     { background: #D4638C; color: #fff; border-color: #D4638C; }
+.work-card__type[data-type="Animation"]  { background: #5588D6; color: #fff; border-color: #5588D6; }
+.work-card__type[data-type="3DModeling"] { background: #3DAB7C; color: #fff; border-color: #3DAB7C; }
+.work-card__type[data-type="Boardgame"]  { background: #D4923A; color: #fff; border-color: #D4923A; }
+.work-card__type[data-type="other"]      { background: #8896A6; color: #fff; border-color: #8896A6; }
 
 .work-card__thumb {
   position: relative;
@@ -1361,8 +1361,8 @@ img { display: block; max-width: 100%; }
   border: 1px solid currentColor; padding: 1px 5px;
   white-space: nowrap;
 }
-.boardgame-card__cat[data-cat="GameDesign"] { background: #2563EB; color: #fff; border-color: #2563EB; }
-.boardgame-card__cat[data-cat="Artwork"]    { background: #DB2777; color: #fff; border-color: #DB2777; }
+.boardgame-card__cat[data-cat="GameDesign"] { background: #5588D6; color: #fff; border-color: #5588D6; }
+.boardgame-card__cat[data-cat="Artwork"]    { background: #D4638C; color: #fff; border-color: #D4638C; }
 .boardgame-card__num {
   flex-shrink: 0;
   color: var(--fg-dim);
