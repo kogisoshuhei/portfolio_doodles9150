@@ -9,10 +9,10 @@
 
 /* ── Tokens ─────────────────────────────────────────────────── */
 :root {
-  --bg:       #ffffff;
-  --fg:       #000000;
-  --fg-dim:   rgba(0, 0, 0, 0.38);
-  --border:   1px solid #000000;
+  --bg:       #F8F3E8;
+  --fg:       #1A0F05;
+  --fg-dim:   rgba(26, 15, 5, 0.40);
+  --border:   1px solid #1A0F05;
 
   --font:     'IBM Plex Mono', 'Courier New', Courier, monospace;
   --size-xs:  11px;
@@ -114,7 +114,7 @@ img { display: block; max-width: 100%; }
   letter-spacing: var(--ls-wide);
   transition:  background 0.08s, color 0.08s;
 }
-.header__nav a:hover       { background: rgba(0,0,0,0.08); text-decoration: none; }
+.header__nav a:hover       { background: rgba(26,15,5,0.08); text-decoration: none; }
 .header__nav a.is-current  { background: var(--fg); color: var(--bg); }
 
 .header__spacer { flex: 1; }
@@ -223,11 +223,6 @@ img { display: block; max-width: 100%; }
   font-size: var(--size-xs); letter-spacing: var(--ls-wide);
   padding: 2px 8px; border: var(--border);
 }
-.tag[data-type="Illust"]     { color: #DB2777; border-color: #DB2777; }
-.tag[data-type="Animation"]  { color: #2563EB; border-color: #2563EB; }
-.tag[data-type="3DModeling"] { color: #059669; border-color: #059669; }
-.tag[data-type="Boardgame"]  { color: #D97706; border-color: #D97706; }
-.tag[data-type="other"]      { color: #6B7280; border-color: #6B7280; }
 
 /* ════════════════════════════════════════════════════════════
    SECTION HEADER  (label strip)
@@ -304,7 +299,7 @@ img { display: block; max-width: 100%; }
   aspect-ratio: 16 / 9;
   max-height:  480px;
   overflow:   hidden;
-  background: #f0f0f0;
+  background: #EDE7D8;
   flex-shrink: 0;
   position:   relative; /* overlay anchor */
 }
@@ -419,17 +414,12 @@ img { display: block; max-width: 100%; }
 .slideshow__type.is-fade-in  { animation: typeFadeIn  0.18s ease-out forwards; }
 
 /* category colors — slideshow */
-.slideshow__type[data-type="Illust"]     { color: #DB2777; }
-.slideshow__type[data-type="Animation"]  { color: #2563EB; }
-.slideshow__type[data-type="3DModeling"] { color: #059669; }
-.slideshow__type[data-type="Boardgame"]  { color: #D97706; }
-.slideshow__type[data-type="other"]      { color: #6B7280; }
 
 
 /* progress track: visible gray rail + animated black fill */
 .slideshow__progress-track {
   height:   4px;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(26, 15, 5, 0.1);
   position: relative;
   overflow: hidden;
   border-top: var(--border);
@@ -507,17 +497,12 @@ img { display: block; max-width: 100%; }
 }
 
 /* category colors — work cards */
-.work-card__type[data-type="Illust"]     { color: #DB2777; }
-.work-card__type[data-type="Animation"]  { color: #2563EB; }
-.work-card__type[data-type="3DModeling"] { color: #059669; }
-.work-card__type[data-type="Boardgame"]  { color: #D97706; }
-.work-card__type[data-type="other"]      { color: #6B7280; }
 
 .work-card__thumb {
   position: relative;
   height: 220px;
   overflow: hidden;
-  border-bottom: var(--border); background: #f0f0f0; flex-shrink: 0;
+  border-bottom: var(--border); background: #EDE7D8; flex-shrink: 0;
 }
 .work-card__thumb img {
   position: absolute; inset: 0;
@@ -587,7 +572,7 @@ img { display: block; max-width: 100%; }
   flex: 0 0 220px;
   overflow: hidden;
   border-right: var(--border);
-  background: var(--bg-sub, #f5f5f5);
+  background: var(--bg-sub, #EDE7D8);
 }
 .news-card__thumb img {
   width: 100%; height: 100%;
@@ -954,7 +939,7 @@ img { display: block; max-width: 100%; }
 .work-gallery__stage {
   position: relative;
   aspect-ratio: 16 / 9;
-  background: #f0f0f0;
+  background: #EDE7D8;
   overflow: hidden;
 }
 
@@ -990,7 +975,7 @@ img { display: block; max-width: 100%; }
 .work-gallery__thumb {
   flex-shrink: 0;
   width: 80px; height: 60px;
-  border: var(--border); background: #f0f0f0;
+  border: var(--border); background: #EDE7D8;
   cursor: pointer; overflow: hidden; padding: 0;
   opacity: 0.35; transition: opacity 0.2s;
 }
@@ -1102,7 +1087,7 @@ img { display: block; max-width: 100%; }
 
 .loader__track {
   fill: none;
-  stroke: rgba(0, 0, 0, 0.12);
+  stroke: rgba(26, 15, 5, 0.12);
   stroke-width: 2.5;
 }
 
@@ -1361,8 +1346,6 @@ img { display: block; max-width: 100%; }
   border: 1px solid currentColor; padding: 1px 5px;
   white-space: nowrap;
 }
-.boardgame-card__cat[data-cat="GameDesign"] { color: #2563EB; }
-.boardgame-card__cat[data-cat="Artwork"]    { color: #DB2777; }
 .boardgame-card__num {
   flex-shrink: 0;
   color: var(--fg-dim);
@@ -1400,7 +1383,7 @@ img { display: block; max-width: 100%; }
 .lightbox {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.92);
+  background: rgba(26, 15, 5, 0.92);
   z-index: 200;
   display: flex;
   align-items: center;
