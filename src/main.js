@@ -176,10 +176,11 @@ function setLang(lang) {
     return;
   }
 
-  const bar    = loader.querySelector('.loader__bar');
-  const pctEl  = loader.querySelector('.loader__pct');
-  const wrap   = loader.querySelector('.loader__circle-wrap');
-  const imgEl  = loader.querySelector('.loader__img');
+  const bar     = loader.querySelector('.loader__bar');
+  const pctEl   = loader.querySelector('.loader__pct');
+  const wrap    = loader.querySelector('.loader__circle-wrap');
+  const imgEl   = loader.querySelector('.loader__img');
+  const bloomEl = loader.querySelector('.loader__bloom');
   const C      = 251.33; /* stroke-dasharray: 2π × 40 */
 
   /* ローダー画像を自動検出 (01〜09, jpg/jpeg/png/gif/webp 対応) — srcのセットは showImg() に一本化 */
@@ -236,17 +237,28 @@ function setLang(lang) {
     wrap.style.opacity = '0';
     setTimeout(() => {
       wrap.style.display = 'none';
-      imgEl.classList.add('is-visible');   /* spring アニメーション開始 (0.45s) */
-      loader.classList.add('is-img-visible'); /* 白円ブルームを発火 */
+      imgEl.classList.add('is-visible');    /* spring アニメーション開始 (0.45s) */
+      if (bloomEl) bloomEl.classList.add('is-visible'); /* 白円も同じ spring で発火 */
 
       /* spring 完了 (450ms) + 1秒表示してからフェードアウト */
       setTimeout(() => {
-        imgEl.style.animation  = 'none';     /* fill-mode をリセット */
-        imgEl.style.transform  = 'scale(1)'; /* transform も固定 (scale(0) に戻るのを防ぐ) */
-        imgEl.style.opacity    = '1';        /* 明示的に 1 をセット */
-        void imgEl.offsetWidth;              /* reflow で transition の起点を確定 */
+        /* 画像リセット */
+        imgEl.style.animation  = 'none';
+        imgEl.style.transform  = 'scale(1)';
+        imgEl.style.opacity    = '1';
+        void imgEl.offsetWidth;
         imgEl.style.transition = 'opacity 0.6s ease';
         imgEl.style.opacity    = '0';
+
+        /* bloom も同タイミングでフェードアウト */
+        if (bloomEl) {
+          bloomEl.style.animation  = 'none';
+          bloomEl.style.transform  = 'scale(1)';
+          bloomEl.style.opacity    = '1';
+          void bloomEl.offsetWidth;
+          bloomEl.style.transition = 'opacity 0.6s ease';
+          bloomEl.style.opacity    = '0';
+        }
 
         setTimeout(() => {
           window.removeEventListener('scroll', noScroll);
