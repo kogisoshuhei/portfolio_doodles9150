@@ -110,6 +110,19 @@ function applyLang(lang) {
 
   /* boardgame detail の再描画 */
   renderBoardgameDetail();
+
+  /* プロフィール bio の言語切替 */
+  applyProfileBio(lang);
+}
+
+function applyProfileBio(lang) {
+  if (!window.SITE_SETTINGS?.profileBio) return;
+  const bioEl = document.querySelector('.profile-bio');
+  if (!bioEl) return;
+  const paras = (lang === 'en' && window.SITE_SETTINGS.profileBioEn?.length)
+    ? window.SITE_SETTINGS.profileBioEn
+    : window.SITE_SETTINGS.profileBio;
+  bioEl.innerHTML = paras.map(p => `<p>${p}</p>`).join('');
 }
 
 function setLang(lang) {
@@ -980,12 +993,23 @@ function initRender() {
     }
   }
 
-  /* プロフィール画像をスプレッドシートから適用 */
+  /* プロフィール情報をスプレッドシートから適用 */
   if (window.SITE_SETTINGS?.profileImg) {
     document.querySelectorAll('#js-profile-photo').forEach(el => {
       el.src = window.SITE_SETTINGS.profileImg;
     });
   }
+  if (window.SITE_SETTINGS?.profileName) {
+    document.querySelectorAll('.profile-name, .profile-brief__name').forEach(el => {
+      el.textContent = window.SITE_SETTINGS.profileName;
+    });
+  }
+  if (window.SITE_SETTINGS?.profileRole) {
+    document.querySelectorAll('.profile-role, .profile-brief__role').forEach(el => {
+      el.textContent = window.SITE_SETTINGS.profileRole;
+    });
+  }
+  applyProfileBio(currentLang());
 
   /* 詳細ページ・言語適用 */
   renderWorkDetail();

@@ -129,6 +129,23 @@
       if (v) settings.profileImg = v.includes('drive.google.com') ? driveUrl(v) : v;
     }
 
+    function strField(key) {
+      const i = headers.indexOf(key);
+      return i >= 0 ? (vals[i] ?? '').trim().replace(/#VALUE!/g, '') : '';
+    }
+
+    const pName = strField('profileName');
+    if (pName) settings.profileName = pName;
+
+    const pRole = strField('profileRole');
+    if (pRole) settings.profileRole = pRole;
+
+    const pBio = strField('profileBio');
+    if (pBio) settings.profileBio = pBio.split('|').map(s => s.trim()).filter(Boolean);
+
+    const pBioEn = strField('profileBioEn');
+    if (pBioEn) settings.profileBioEn = pBioEn.split('|').map(s => s.trim()).filter(Boolean);
+
     const loaderIdx = headers.indexOf('loaderImg');
     if (loaderIdx >= 0) {
       const loaderUrls = vals.slice(loaderIdx)
