@@ -67,15 +67,15 @@
       /* bool */
       obj.pickup = obj.pickup === 'TRUE' || obj.pickup === 'true' || obj.pickup === '1';
 
-      /* 段落配列 (| 区切り) */
+      /* 段落配列 (| または ｜ 区切り) */
       ['detail', 'detailEn'].forEach(k => {
-        if (obj[k]) obj[k] = obj[k].split('|').map(s => s.trim()).filter(Boolean);
+        if (obj[k]) obj[k] = obj[k].split(/[|｜]/).map(s => s.trim()).filter(Boolean);
         else        delete obj[k];
       });
 
-      /* boardgame category (| 区切り) */
+      /* boardgame category (| または ｜ 区切り) */
       if (kind === 'boardgame' && obj.category) {
-        const cats = obj.category.split('|').map(s => s.trim()).filter(Boolean);
+        const cats = obj.category.split(/[|｜]/).map(s => s.trim()).filter(Boolean);
         obj.category = cats.length === 1 ? cats[0] : cats.length > 1 ? cats : undefined;
       }
 
@@ -141,10 +141,10 @@
     if (pRole) settings.profileRole = pRole;
 
     const pBio = strField('profileBio');
-    if (pBio) settings.profileBio = pBio.split('|').map(s => s.trim()).filter(Boolean);
+    if (pBio) settings.profileBio = pBio.split(/[|｜]/).map(s => s.trim()).filter(Boolean);
 
     const pBioEn = strField('profileBioEn');
-    if (pBioEn) settings.profileBioEn = pBioEn.split('|').map(s => s.trim()).filter(Boolean);
+    if (pBioEn) settings.profileBioEn = pBioEn.split(/[|｜]/).map(s => s.trim()).filter(Boolean);
 
     const loaderIdx = headers.indexOf('loaderImg');
     if (loaderIdx >= 0) {
