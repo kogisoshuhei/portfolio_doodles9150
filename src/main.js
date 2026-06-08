@@ -297,6 +297,39 @@ function setLang(lang) {
   setTimeout(tick, 120);
 })();
 
+/* ── Data Loading Overlay ────────────────────────────────────
+   works / boardgame / news / detail ページで sheetsReady まで
+   コンテンツを隠す。index.html（#js-loader あり）はスキップ。
+   ────────────────────────────────────────────────────────── */
+(function () {
+  if (document.getElementById('js-loader')) return;
+
+  const needsData = document.querySelector(
+    '.top-works-grid, .boardgame-card-grid, .news-card-grid, .news-list, [data-work-num], [data-boardgame-num]'
+  );
+  if (!needsData) return;
+
+  const ov  = document.createElement('div');
+  ov.id = 'js-data-overlay';
+  const bar = document.createElement('div');
+  bar.id = 'js-data-bar';
+  ov.appendChild(bar);
+  document.body.appendChild(ov);
+
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    bar.classList.add('is-running');
+  }));
+
+  document.addEventListener('sheetsReady', function () {
+    bar.classList.remove('is-running');
+    bar.classList.add('is-done');
+    setTimeout(() => {
+      ov.classList.add('is-out');
+      setTimeout(() => ov.remove(), 420);
+    }, 120);
+  }, { once: true });
+})();
+
 /* ── Clock ──────────────────────────────────────────────────── */
 const clockEl = document.getElementById('js-clock');
 
