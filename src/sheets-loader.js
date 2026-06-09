@@ -162,24 +162,31 @@
   }
 
   /* ── sessionStorage キャッシュ（5分TTL）─────────────────────
-     同一セッション内の2回目以降のページ遷移でデータを即時適用する */
+     ページ遷移（リンク経由）のみキャッシュを使用する。
+     リロード（F5）時はキャッシュを破棄してスプレッドシートから再取得する。 */
   const _CACHE_KEY = 'sc_v1';
   const _CACHE_TTL = 5 * 60 * 1000;
-  try {
-    const _raw = sessionStorage.getItem(_CACHE_KEY);
-    if (_raw) {
-      const { ts, d } = JSON.parse(_raw);
-      if (Date.now() - ts <= _CACHE_TTL) {
-        if (d.WORKS)         WORKS         = d.WORKS;
-        if (d.BOARDGAME)     BOARDGAME     = d.BOARDGAME;
-        if (d.NEWS)          NEWS          = d.NEWS;
-        if (d.SITE_SETTINGS) window.SITE_SETTINGS = Object.assign(window.SITE_SETTINGS || {}, d.SITE_SETTINGS);
-        setTimeout(function () { document.dispatchEvent(new Event('sheetsReady')); }, 0);
-        return; /* フェッチをスキップ */
+  const _isReload  = (performance.getEntriesByType?.('navigation')?.[0]?.type === 'reload')
+                  || (performance.navigation?.type === 1);
+  if (_isReload) {
+    sessionStorage.removeItem(_CACHE_KEY);
+  } else {
+    try {
+      const _raw = sessionStorage.getItem(_CACHE_KEY);
+      if (_raw) {
+        const { ts, d } = JSON.parse(_raw);
+        if (Date.now() - ts <= _CACHE_TTL) {
+          if (d.WORKS)         WORKS         = d.WORKS;
+          if (d.BOARDGAME)     BOARDGAME     = d.BOARDGAME;
+          if (d.NEWS)          NEWS          = d.NEWS;
+          if (d.SITE_SETTINGS) window.SITE_SETTINGS = Object.assign(window.SITE_SETTINGS || {}, d.SITE_SETTINGS);
+          setTimeout(function () { document.dispatchEvent(new Event('sheetsReady')); }, 0);
+          return; /* フェッチをスキップ */
+        }
+        sessionStorage.removeItem(_CACHE_KEY);
       }
-      sessionStorage.removeItem(_CACHE_KEY);
-    }
-  } catch (_e) {}
+    } catch (_e) {}
+  }
 
   /* 8秒以内にデータが取得できなければローカルデータで描画 */
   const fallbackTimer = setTimeout(() => {
