@@ -111,6 +111,9 @@ function applyLang(lang) {
   /* boardgame detail の再描画 */
   renderBoardgameDetail();
 
+  /* related items の再描画 */
+  renderRelatedItems();
+
   /* プロフィール bio の言語切替 */
   applyProfileBio(lang);
 }
@@ -974,6 +977,61 @@ function renderBoardgameDetail() {
   }
 }
 
+/* ── Related items ───────────────────────────────────────────── */
+function renderRelatedItems() {
+  const relEl  = document.getElementById('js-related');
+  if (!relEl) return;
+
+  const lang   = currentLang();
+  const workEl = document.querySelector('.work-detail[data-work-num]');
+  const bgEl   = document.querySelector('.boardgame-detail[data-boardgame-num]');
+
+  let allItems, currentNum, hrefFn, imgBaseFn;
+
+  if (workEl && typeof WORKS !== 'undefined' && WORKS.length > 1) {
+    currentNum = workEl.dataset.workNum;
+    allItems   = WORKS;
+    hrefFn     = w => `./${w.num}.html`;
+    imgBaseFn  = w => `../assets/works/${w.num}/main`;
+  } else if (bgEl && typeof BOARDGAME !== 'undefined' && BOARDGAME.length > 1) {
+    currentNum = bgEl.dataset.boardgameNum;
+    allItems   = BOARDGAME;
+    hrefFn     = w => `./boardgame-${w.num}.html`;
+    imgBaseFn  = w => `../assets/boardgame/${w.num}/main`;
+  } else {
+    relEl.innerHTML = '';
+    return;
+  }
+
+  const idx   = allItems.findIndex(w => w.num === currentNum);
+  const items = [...allItems.slice(idx + 1), ...allItems.slice(0, idx)].slice(0, 3);
+
+  if (!items.length) { relEl.innerHTML = ''; return; }
+
+  const heading = lang === 'en'
+    ? (workEl ? 'OTHER WORKS' : 'OTHER BOARDGAMES')
+    : (workEl ? 'OTHER WORKS' : 'OTHER BOARDGAMES');
+
+  relEl.innerHTML = `
+    <p class="related__heading">${heading}</p>
+    <div class="related__grid">
+      ${items.map(w => {
+        const name    = lang === 'en' && w.nameEn ? w.nameEn : w.name;
+        const imgAttr = w.img
+          ? `src="${w.img}"`
+          : `data-auto-base="${imgBaseFn(w)}"`;
+        return `<a class="related__card" href="${hrefFn(w)}">
+          <figure class="related__thumb">
+            <img ${imgAttr} alt="${name}" loading="lazy" />
+          </figure>
+          <span class="related__name">${name}</span>
+        </a>`;
+      }).join('')}
+    </div>`;
+
+  relEl.querySelectorAll('img[data-auto-base]').forEach(resolveThumbImg);
+}
+
 /* ── Language init ───────────────────────────────────────────── */
 document.querySelectorAll('.header__lang').forEach(btn => {
   btn.addEventListener('click', () => setLang(_lang === 'ja' ? 'en' : 'ja'));
@@ -1047,6 +1105,7 @@ function initRender() {
   /* 詳細ページ・言語適用 */
   renderWorkDetail();
   renderBoardgameDetail();
+  renderRelatedItems();
   applyLang(_lang);
 }
 
