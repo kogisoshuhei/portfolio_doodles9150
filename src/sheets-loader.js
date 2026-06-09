@@ -53,7 +53,8 @@
     const lines = text.split('\n').filter(l => l.trim());
     if (lines.length < 2) return null;
 
-    const headers = parseLine(lines[0]).map(h => h.trim());
+    /* ヘッダーの「（注釈）」「(注釈)」を除去して純粋なキー名にする */
+    const headers = parseLine(lines[0]).map(h => h.trim().replace(/[（(].*/, '').trim());
     const galleryIdx = headers.indexOf('gallery');
 
     const rows = lines.slice(1).map(line => {
@@ -117,7 +118,7 @@
     const lines = text.split('\n').filter(l => l.trim());
     if (lines.length < 2) return null;
 
-    const headers = parseLine(lines[0]).map(h => h.trim());
+    const headers = parseLine(lines[0]).map(h => h.trim().replace(/[（(].*/, '').trim());
     const vals    = parseLine(lines[1]);
 
     const settings = {};
