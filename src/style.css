@@ -1605,11 +1605,4 @@ img { display: block; max-width: 100%; }
   background: var(--fg);
   width:      0%;
 }
-#js-data-bar.is-running {
-  transition: width 3s cubic-bezier(0.1, 0.4, 0.4, 1);
-  width:      80%;
-}
-#js-data-bar.is-done {
-  transition: width 0.15s ease;
-  width:      100%;
-}
+/* width は JS で直接制御 */

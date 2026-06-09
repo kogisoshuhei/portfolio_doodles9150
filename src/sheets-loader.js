@@ -161,6 +161,26 @@
     return Object.keys(settings).length ? settings : null;
   }
 
+  /* ── sessionStorage キャッシュ（5分TTL）─────────────────────
+     同一セッション内の2回目以降のページ遷移でデータを即時適用する */
+  const _CACHE_KEY = 'sc_v1';
+  const _CACHE_TTL = 5 * 60 * 1000;
+  try {
+    const _raw = sessionStorage.getItem(_CACHE_KEY);
+    if (_raw) {
+      const { ts, d } = JSON.parse(_raw);
+      if (Date.now() - ts <= _CACHE_TTL) {
+        if (d.WORKS)         WORKS         = d.WORKS;
+        if (d.BOARDGAME)     BOARDGAME     = d.BOARDGAME;
+        if (d.NEWS)          NEWS          = d.NEWS;
+        if (d.SITE_SETTINGS) window.SITE_SETTINGS = Object.assign(window.SITE_SETTINGS || {}, d.SITE_SETTINGS);
+        setTimeout(function () { document.dispatchEvent(new Event('sheetsReady')); }, 0);
+        return; /* フェッチをスキップ */
+      }
+      sessionStorage.removeItem(_CACHE_KEY);
+    }
+  } catch (_e) {}
+
   /* 8秒以内にデータが取得できなければローカルデータで描画 */
   const fallbackTimer = setTimeout(() => {
     document.dispatchEvent(new Event('sheetsReady'));
@@ -177,12 +197,27 @@
       : Promise.resolve(null);
   }
 
+  /* 進捗追跡: 各フェッチ完了ごとに sheetsProgress を dispatch */
+  const _total = [SHEETS_CONFIG.worksUrl, SHEETS_CONFIG.boardgameUrl,
+                  SHEETS_CONFIG.newsUrl,  SHEETS_CONFIG.settingsUrl,
+                  SHEETS_CONFIG.profileUrl].filter(Boolean).length;
+  let _loaded = 0;
+  function fetchCsvWithProgress(url) {
+    if (!url) return Promise.resolve(null);
+    return fetchCsv(url).then(function (r) {
+      _loaded++;
+      document.dispatchEvent(new CustomEvent('sheetsProgress',
+        { detail: { loaded: _loaded, total: _total } }));
+      return r;
+    });
+  }
+
   Promise.all([
-    fetchCsv(SHEETS_CONFIG.worksUrl),
-    fetchCsv(SHEETS_CONFIG.boardgameUrl),
-    fetchCsv(SHEETS_CONFIG.newsUrl),
-    fetchCsv(SHEETS_CONFIG.settingsUrl),
-    fetchCsv(SHEETS_CONFIG.profileUrl),
+    fetchCsvWithProgress(SHEETS_CONFIG.worksUrl),
+    fetchCsvWithProgress(SHEETS_CONFIG.boardgameUrl),
+    fetchCsvWithProgress(SHEETS_CONFIG.newsUrl),
+    fetchCsvWithProgress(SHEETS_CONFIG.settingsUrl),
+    fetchCsvWithProgress(SHEETS_CONFIG.profileUrl),
   ]).then(function ([worksCsv, bgCsv, newsCsv, settingsCsv, profileCsv]) {
     if (worksCsv) {
       const data = parseCSV(worksCsv, 'works');
@@ -207,6 +242,17 @@
   }).catch(function () {
     /* ネットワークエラー → ローカルデータで続行 */
   }).finally(function () {
+    /* 取得結果を sessionStorage にキャッシュ */
+    try {
+      const d = {};
+      if (typeof WORKS     !== 'undefined' && Array.isArray(WORKS))     d.WORKS     = WORKS;
+      if (typeof BOARDGAME !== 'undefined' && Array.isArray(BOARDGAME)) d.BOARDGAME = BOARDGAME;
+      if (typeof NEWS      !== 'undefined' && Array.isArray(NEWS))      d.NEWS      = NEWS;
+      if (window.SITE_SETTINGS && typeof window.SITE_SETTINGS === 'object')
+        d.SITE_SETTINGS = window.SITE_SETTINGS;
+      sessionStorage.setItem(_CACHE_KEY, JSON.stringify({ ts: Date.now(), d }));
+    } catch (_e) {}
+
     clearTimeout(fallbackTimer);
     document.dispatchEvent(new Event('sheetsReady'));
   });

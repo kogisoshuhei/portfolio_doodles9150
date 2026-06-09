@@ -147,17 +147,13 @@ function setLang(lang) {
     return { ov, bar };
   }
 
-  /* 新しいページに着地したとき: 0% → 100% を描画してフェードアウト */
+  /* 新しいページに着地したとき: 即フェードアウト（データオーバーレイが進捗を担う） */
   if (sessionStorage.getItem(SS_KEY)) {
     sessionStorage.removeItem(SS_KEY);
-    const { ov, bar } = makeOverlay();
-    /* double rAF: 1フレーム目で bar が width:0% の状態を描画させてから遷移開始 */
+    const { ov } = makeOverlay();
     requestAnimationFrame(() => requestAnimationFrame(() => {
-      bar.style.width = '100%';
-      setTimeout(() => {
-        ov.classList.add('is-out');
-        setTimeout(() => ov.remove(), 380);
-      }, 500);
+      ov.classList.add('is-out');
+      setTimeout(() => ov.remove(), 300);
     }));
   }
 
@@ -301,35 +297,57 @@ function setLang(lang) {
 })();
 
 /* ── Data Loading Overlay ────────────────────────────────────
-   works / boardgame / news / detail ページで sheetsReady まで
-   コンテンツを隠す。index.html（#js-loader あり）はスキップ。
+   - sheetsReady が 80ms 以内に来た場合はオーバーレイを表示しない
+   - それ以降は表示し、sheetsProgress で実進捗をバーに反映する
    ────────────────────────────────────────────────────────── */
 (function () {
   if (document.getElementById('js-loader')) return;
 
-  const needsData = document.querySelector(
+  if (!document.querySelector(
     '.top-works-grid, .boardgame-card-grid, .news-card-grid, .news-list, [data-work-num], [data-boardgame-num]'
-  );
-  if (!needsData) return;
+  )) return;
 
-  const ov  = document.createElement('div');
-  ov.id = 'js-data-overlay';
-  const bar = document.createElement('div');
-  bar.id = 'js-data-bar';
-  ov.appendChild(bar);
-  document.body.appendChild(ov);
+  let ov = null, bar = null, done = false, pct = 0;
 
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    bar.classList.add('is-running');
-  }));
+  function showOverlay() {
+    if (done || ov) return;
+    ov  = document.createElement('div');
+    ov.id = 'js-data-overlay';
+    bar = document.createElement('div');
+    bar.id = 'js-data-bar';
+    ov.appendChild(bar);
+    document.body.appendChild(ov);
+    requestAnimationFrame(function () {
+      bar.style.transition = 'width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      bar.style.width = pct + '%';
+    });
+  }
+
+  function hideOverlay() {
+    done = true;
+    if (!ov) return;
+    bar.style.transition = 'width 0.15s ease';
+    bar.style.width = '100%';
+    setTimeout(function () {
+      ov.classList.add('is-out');
+      setTimeout(function () { ov.remove(); }, 420);
+    }, 100);
+  }
+
+  /* キャッシュヒット時は sheetsReady が ~0ms で来るのでオーバーレイを作らない */
+  const showTimer = setTimeout(showOverlay, 80);
+
+  document.addEventListener('sheetsProgress', function (e) {
+    pct = Math.round((e.detail.loaded / e.detail.total) * 100);
+    if (bar) {
+      bar.style.transition = 'width 0.35s ease';
+      bar.style.width = pct + '%';
+    }
+  });
 
   document.addEventListener('sheetsReady', function () {
-    bar.classList.remove('is-running');
-    bar.classList.add('is-done');
-    setTimeout(() => {
-      ov.classList.add('is-out');
-      setTimeout(() => ov.remove(), 420);
-    }, 120);
+    clearTimeout(showTimer);
+    hideOverlay();
   }, { once: true });
 })();
 
