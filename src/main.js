@@ -1022,9 +1022,15 @@ function renderRelatedItems() {
           : `data-auto-base="${imgBaseFn(w)}"`;
         return `<a class="related__card" href="${hrefFn(w)}">
           <figure class="related__thumb">
-            <img ${imgAttr} alt="${name}" loading="lazy" />
+            <img class="related__thumb-img" ${imgAttr} alt="${name}" loading="lazy" />
+            <div class="related__overlay">
+              <span class="related__overlay-name">${name}</span>
+            </div>
           </figure>
-          <span class="related__name">${name}</span>
+          <span class="related__label">
+            <span class="related__num">${w.num}</span>
+            <span class="related__name">${name}</span>
+          </span>
         </a>`;
       }).join('')}
     </div>`;
