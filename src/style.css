@@ -521,11 +521,14 @@ img { display: block; max-width: 100%; }
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
+.work-card__types {
+  display: flex; gap: 4px; flex-shrink: 0; align-items: center;
+}
 .work-card__type {
   font-size: var(--size-xs); letter-spacing: var(--ls-wide);
   font-family: var(--font-label);
   border: 1px solid currentColor; padding: 1px 5px;
-  flex-shrink: 0; align-self: center;
+  flex-shrink: 0;
   transition: color 0.25s ease;
 }
 

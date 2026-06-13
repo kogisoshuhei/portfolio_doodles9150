@@ -56,6 +56,17 @@ const SITE = {
   });
 })();
 
+/* ── Type badge helpers ──────────────────────────────────────── */
+function workTypeBadges(type) {
+  if (!type) return '';
+  const types = Array.isArray(type) ? type : [type];
+  return types.map(t => `<span class="work-card__type" data-type="${t}">${t}</span>`).join('');
+}
+function typeLabel(type) {
+  if (!type) return '';
+  return Array.isArray(type) ? type.join(' / ') : type;
+}
+
 /* ── Language ────────────────────────────────────────────────── */
 let _lang = localStorage.getItem('lang') || 'ja';
 
@@ -588,12 +599,13 @@ function renderSlides(el) {
     .sort(() => Math.random() - 0.5)
     .slice(0, 5);
   track.innerHTML = items.map((w, i) => {
-    const href = w.href || (w.type === 'Boardgame'
+    const t0   = Array.isArray(w.type) ? w.type[0] : (w.type || '');
+    const href = w.href || (t0 === 'Boardgame'
       ? `./works/boardgame-${w.num}.html`
       : `./works/${w.num}.html`);
     return `<div class="slideshow__slide"
           data-num="${w.num}" data-name="${w.name}"
-          data-type="${w.type}" data-href="${href}">
+          data-type="${t0}" data-href="${href}">
        <figure class="slideshow__fig">
          <img src="${w.img}" alt="${w.name}" loading="${i === 0 ? 'eager' : 'lazy'}" />
        </figure>
@@ -616,8 +628,11 @@ function renderSlides(el) {
   const typeEl = el.querySelector('#js-slide-type');
   if (numEl)  numEl.textContent      = items[0]?.num  ?? '';
   if (nameEl) nameEl.textContent     = items[0]?.name ?? '';
-  if (typeEl) { typeEl.textContent   = items[0]?.type ?? '';
-                typeEl.dataset.type  = items[0]?.type ?? ''; }
+  if (typeEl) {
+    const t0 = Array.isArray(items[0]?.type) ? items[0].type[0] : (items[0]?.type ?? '');
+    typeEl.textContent  = t0;
+    typeEl.dataset.type = t0;
+  }
 }
 
 /* img 未設定時に jpg→jpeg→png→gif→webp の順で自動検出してセット */
@@ -658,7 +673,7 @@ function renderWorkCards(gridEl, itemsOrFilter) {
        <div class="window__titlebar">
          <span class="work-card__num">${w.num}</span>
          <span class="work-card__name">${lang === 'en' && w.nameEn ? w.nameEn : w.name}</span>
-         <span class="work-card__type" data-type="${w.type || 'Boardgame'}">${w.type || 'Boardgame'}</span>
+         <span class="work-card__types">${workTypeBadges(w.type || 'Boardgame')}</span>
        </div>
        <figure class="work-card__thumb">
          <img ${imgAttr} alt="${w.name}" loading="lazy" />
@@ -879,13 +894,12 @@ function renderWorkDetail() {
       catsEl.className = 'work-detail__cats';
       nameEl.parentNode.insertBefore(catsEl, nameEl);
     }
-    catsEl.innerHTML = w.type
-      ? `<span class="work-card__type" data-type="${w.type}">${w.type}</span>` : '';
+    catsEl.innerHTML = workTypeBadges(w.type);
     nameEl.textContent = displayName;
   }
 
   const subEl = document.getElementById('js-detail-subtitle');
-  if (subEl) subEl.textContent = `${w.type} — ${w.year} — ${w.role}`;
+  if (subEl) subEl.textContent = `${typeLabel(w.type)} — ${w.year} — ${w.role}`;
 
   const descEl = document.getElementById('js-detail-desc');
   if (descEl) {
@@ -1063,7 +1077,7 @@ function renderRelatedItems() {
           ? `src="${w.img}"`
           : `data-auto-base="${imgBaseFn(w)}"`;
         const catBadges = workEl
-          ? (w.type ? `<span class="work-card__type" data-type="${w.type}">${w.type}</span>` : '')
+          ? workTypeBadges(w.type)
           : (w.category
               ? (Array.isArray(w.category) ? w.category : [w.category])
                   .map(c => `<span class="boardgame-card__cat" data-cat="${c}">${c}</span>`).join('')

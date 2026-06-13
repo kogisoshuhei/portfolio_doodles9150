@@ -74,7 +74,11 @@
         else        delete obj[k];
       });
 
-      /* boardgame category (| または ｜ 区切り) */
+      /* works type / boardgame category (| または ｜ 区切り) */
+      if (kind === 'works' && obj.type) {
+        const types = obj.type.split(/[|｜]/).map(s => s.trim()).filter(Boolean);
+        obj.type = types.length === 1 ? types[0] : types.length > 1 ? types : obj.type;
+      }
       if (kind === 'boardgame' && obj.category) {
         const cats = obj.category.split(/[|｜]/).map(s => s.trim()).filter(Boolean);
         obj.category = cats.length === 1 ? cats[0] : cats.length > 1 ? cats : undefined;
