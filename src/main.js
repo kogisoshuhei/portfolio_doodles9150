@@ -1139,13 +1139,22 @@ function applyPageIntro() {
   if (!introEl || !window.SITE_SETTINGS) return;
   const isWorks = !!document.querySelector('.works-section[aria-label="Works"]');
   const isBG    = !!document.querySelector('.works-section[aria-label="Boardgame Artwork"]');
+  let jaText, enText;
   if (isWorks) {
-    if (window.SITE_SETTINGS.worksPageIntro)   introEl.dataset.ja = window.SITE_SETTINGS.worksPageIntro;
-    if (window.SITE_SETTINGS.worksPageIntroEn) introEl.dataset.en = window.SITE_SETTINGS.worksPageIntroEn;
+    jaText = window.SITE_SETTINGS.worksPageIntro;
+    enText = window.SITE_SETTINGS.worksPageIntroEn;
   } else if (isBG) {
-    if (window.SITE_SETTINGS.boardgamePageIntro)   introEl.dataset.ja = window.SITE_SETTINGS.boardgamePageIntro;
-    if (window.SITE_SETTINGS.boardgamePageIntroEn) introEl.dataset.en = window.SITE_SETTINGS.boardgamePageIntroEn;
+    jaText = window.SITE_SETTINGS.boardgamePageIntro;
+    enText = window.SITE_SETTINGS.boardgamePageIntroEn;
   }
+  if (!jaText && !enText) return;
+  function toHtml(t) {
+    return (t || '').split(/[|｜]/).map(function (s) { return s.trim(); }).filter(Boolean).join('<br>');
+  }
+  introEl.removeAttribute('data-ja');
+  introEl.removeAttribute('data-en');
+  introEl.dataset.jaHtml = toHtml(jaText);
+  introEl.dataset.enHtml = toHtml(enText || jaText);
 }
 
 /* スライドショーはローカルデータで即座に描画 — sheets 待ちでローディング後に空白にならないよう */
