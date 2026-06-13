@@ -14,7 +14,13 @@
   --fg-dim:   rgba(26, 15, 5, 0.40);
   --border:   1px solid #1A0F05;
 
-  --font:     'IBM Plex Mono', 'Courier New', Courier, monospace;
+  /* フォント定義 */
+  --font-logo:  'Changa One', sans-serif;           /* ヘッダーロゴ・ナビ */
+  --font-label: 'Lexend', sans-serif;               /* UIラベル・英語タイトル */
+  --font-body:  'Noto Serif JP', 'Overpass', serif; /* 本文（JA） */
+  --font-title: 'Sawarabi Gothic', sans-serif;      /* タイトル（JA） */
+  --font:       var(--font-body);                   /* 後方互換 */
+
   --size-xs:  11px;
   --size-sm:  12px;
   --size-base: 13px;
@@ -39,9 +45,14 @@ html {
   font-size:   var(--size-base);
   line-height: var(--lh);
   letter-spacing: var(--ls-norm);
-  -webkit-font-smoothing: none;
-  font-smooth: never;
+  -webkit-font-smoothing: antialiased;
   scroll-behavior: smooth;
+}
+
+/* 英語モード: --font-body / --font-title を Overpass / Lexend に切替 */
+html[lang="en"] {
+  --font-body:  'Overpass', sans-serif;
+  --font-title: 'Lexend', sans-serif;
 }
 
 body {
@@ -88,8 +99,10 @@ img { display: block; max-width: 100%; }
 
 .header__logo {
   padding:     7px 14px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-family: var(--font-logo);
+  font-style:  italic;
+  font-weight: 400;
+  letter-spacing: 0.04em;
   border-right:   var(--border);
   display:     flex;
   align-items: center;
@@ -110,6 +123,9 @@ img { display: block; max-width: 100%; }
   border-right: var(--border);
   display:     flex;
   align-items: center;
+  font-family: var(--font-logo);
+  font-style:  normal;
+  font-weight: 400;
   font-size:   var(--size-xs);
   letter-spacing: var(--ls-wide);
   transition:  background 0.08s, color 0.08s;
@@ -1606,3 +1622,58 @@ img { display: block; max-width: 100%; }
   width:      0%;
 }
 /* width は JS で直接制御 */
+
+/* ════════════════════════════════════════════════════════════
+   FONT ASSIGNMENTS
+   ════════════════════════════════════════════════════════════ */
+
+/* タイトル系（言語切替で Sawarabi Gothic ↔ Lexend） */
+.work-detail__title,
+.work-card__name,
+.boardgame-card__name,
+.boardgame-card__overlay-name,
+.news-card__title,
+.profile-name,
+.profile-brief__name,
+.window__title,
+.slideshow__name,
+.related__name          { font-family: var(--font-title); }
+
+/* 本文系（言語切替で Noto Serif JP ↔ Overpass） */
+.work-card__desc,
+.work-detail__desc,
+.profile-bio,
+.profile-brief__role,
+.news-card__desc,
+.news-item__body,
+.page-intro__text,
+.contact__desc          { font-family: var(--font-body); }
+
+/* UIラベル・英語固定テキスト（常に Lexend） */
+.tag,
+.boardgame-card__cat,
+.boardgame-card__num,
+.boardgame-card__overlay-meta,
+.boardgame-card__label,
+.work-card__num,
+.work-card__type,
+.work-card__cta,
+.work-detail__subtitle,
+.work-detail__dl,
+.work-detail__open-link,
+.work-detail__back-link,
+.window__titlebar,
+.window__back,
+.section-header,
+.type-filter__btn,
+.news-card__date,
+.news-item__date,
+.news-pagination__btn,
+.related__num,
+.related__heading,
+.related__label,
+.header__lang,
+.header__clock,
+.header__sns-link,
+.loader__pct,
+.footer                 { font-family: var(--font-label); }
