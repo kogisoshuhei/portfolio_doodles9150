@@ -434,6 +434,7 @@ img { display: block; max-width: 100%; }
 @keyframes typeFadeIn  { from { opacity: 0; } to { opacity: 1; } }
 
 .slideshow__type { font-size: var(--size-xs); letter-spacing: var(--ls-wide);
+  font-family: var(--font-label);
   border: 1px solid currentColor; padding: 1px 6px;
 }
 .slideshow__type[data-type="Illust"]     { background: #D4638C; color: #fff; border-color: #D4638C; }
@@ -1037,6 +1038,10 @@ img { display: block; max-width: 100%; }
 
 .work-detail__main {
   padding: var(--pad-lg); border-right: var(--border);
+}
+
+.work-detail__cats {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: var(--pad-sm);
 }
 
 .work-detail__title {

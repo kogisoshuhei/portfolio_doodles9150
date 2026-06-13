@@ -871,7 +871,18 @@ function renderWorkDetail() {
   if (titlebarEl) titlebarEl.textContent = `WORKS / ${w.num} — ${displayName}`;
 
   const nameEl = document.getElementById('js-detail-name');
-  if (nameEl) nameEl.textContent = displayName;
+  if (nameEl) {
+    let catsEl = document.getElementById('js-detail-cats');
+    if (!catsEl) {
+      catsEl = document.createElement('div');
+      catsEl.id = 'js-detail-cats';
+      catsEl.className = 'work-detail__cats';
+      nameEl.parentNode.insertBefore(catsEl, nameEl);
+    }
+    catsEl.innerHTML = w.type
+      ? `<span class="work-card__type" data-type="${w.type}">${w.type}</span>` : '';
+    nameEl.textContent = displayName;
+  }
 
   const subEl = document.getElementById('js-detail-subtitle');
   if (subEl) subEl.textContent = `${w.type} — ${w.year} — ${w.role}`;
@@ -951,7 +962,20 @@ function renderBoardgameDetail() {
   if (titlebarEl) titlebarEl.textContent = `BOARDGAME / ${w.num} — ${displayName}`;
 
   const nameEl = document.getElementById('js-detail-name');
-  if (nameEl) nameEl.textContent = displayName;
+  if (nameEl) {
+    let catsEl = document.getElementById('js-detail-cats');
+    if (!catsEl) {
+      catsEl = document.createElement('div');
+      catsEl.id = 'js-detail-cats';
+      catsEl.className = 'work-detail__cats';
+      nameEl.parentNode.insertBefore(catsEl, nameEl);
+    }
+    const cats = w.category
+      ? (Array.isArray(w.category) ? w.category : [w.category]) : [];
+    catsEl.innerHTML = cats
+      .map(c => `<span class="boardgame-card__cat" data-cat="${c}">${c}</span>`).join('');
+    nameEl.textContent = displayName;
+  }
 
   const subEl = document.getElementById('js-detail-subtitle');
   if (subEl) subEl.textContent = `${w.year} — ${w.role}`;
