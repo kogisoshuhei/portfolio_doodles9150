@@ -551,7 +551,10 @@ img { display: block; max-width: 100%; }
   display: flex; flex-direction: column; gap: var(--pad-sm);
 }
 
-.work-card__desc { font-size: var(--size-base); line-height: var(--lh); flex: 1; }
+.work-card__desc {
+  font-size: var(--size-base); line-height: var(--lh); flex: 1;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
 
 .work-card__cta {
   font-size: var(--size-xs); letter-spacing: var(--ls-wide);
@@ -1496,8 +1499,9 @@ img { display: block; max-width: 100%; }
 }
 .boardgame-card__cats {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 4px;
+  overflow: hidden;
 }
 .boardgame-card__cat {
   font-size: var(--size-xs); letter-spacing: var(--ls-wide);
