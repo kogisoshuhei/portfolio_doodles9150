@@ -228,11 +228,27 @@
   ]).then(function ([worksCsv, bgCsv, newsCsv, settingsCsv, profileCsv]) {
     if (worksCsv) {
       const data = parseCSV(worksCsv, 'works');
-      if (data) WORKS = data;
+      if (data) {
+        const introRow = data.find(function (w) { return w.num === '_intro'; });
+        if (introRow) {
+          window.SITE_SETTINGS = window.SITE_SETTINGS || {};
+          if (introRow.desc)   window.SITE_SETTINGS.worksPageIntro   = introRow.desc;
+          if (introRow.descEn) window.SITE_SETTINGS.worksPageIntroEn = introRow.descEn;
+        }
+        WORKS = data.filter(function (w) { return w.num !== '_intro'; });
+      }
     }
     if (bgCsv) {
       const data = parseCSV(bgCsv, 'boardgame');
-      if (data) BOARDGAME = data;
+      if (data) {
+        const introRow = data.find(function (w) { return w.num === '_intro'; });
+        if (introRow) {
+          window.SITE_SETTINGS = window.SITE_SETTINGS || {};
+          if (introRow.desc)   window.SITE_SETTINGS.boardgamePageIntro   = introRow.desc;
+          if (introRow.descEn) window.SITE_SETTINGS.boardgamePageIntroEn = introRow.descEn;
+        }
+        BOARDGAME = data.filter(function (w) { return w.num !== '_intro'; });
+      }
     }
     if (newsCsv) {
       const data = parseCSV(newsCsv, 'news');

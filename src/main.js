@@ -1130,7 +1130,22 @@ function initRender() {
   renderWorkDetail();
   renderBoardgameDetail();
   renderRelatedItems();
+  applyPageIntro();
   applyLang(_lang);
+}
+
+function applyPageIntro() {
+  const introEl = document.querySelector('.page-intro__text');
+  if (!introEl || !window.SITE_SETTINGS) return;
+  const isWorks = !!document.querySelector('.works-section[aria-label="Works"]');
+  const isBG    = !!document.querySelector('.works-section[aria-label="Boardgame Artwork"]');
+  if (isWorks) {
+    if (window.SITE_SETTINGS.worksPageIntro)   introEl.dataset.ja = window.SITE_SETTINGS.worksPageIntro;
+    if (window.SITE_SETTINGS.worksPageIntroEn) introEl.dataset.en = window.SITE_SETTINGS.worksPageIntroEn;
+  } else if (isBG) {
+    if (window.SITE_SETTINGS.boardgamePageIntro)   introEl.dataset.ja = window.SITE_SETTINGS.boardgamePageIntro;
+    if (window.SITE_SETTINGS.boardgamePageIntroEn) introEl.dataset.en = window.SITE_SETTINGS.boardgamePageIntroEn;
+  }
 }
 
 /* スライドショーはローカルデータで即座に描画 — sheets 待ちでローディング後に空白にならないよう */
