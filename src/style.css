@@ -912,13 +912,16 @@ img { display: block; max-width: 100%; }
 
 .profile-name {
   font-size:      var(--size-hero);
-  font-weight:    700;
+  font-family:    var(--font-logo);
+  font-style:     italic;
+  font-weight:    400;
   letter-spacing: 0.04em;
   line-height:    1.1;
 }
 
 .profile-role {
-  font-size: var(--size-sm); color: var(--fg-dim);
+  font-size:      var(--size-sm);
+  font-weight:    700;
   letter-spacing: var(--ls-wide);
   padding-bottom: var(--pad); border-bottom: var(--border);
 }
@@ -956,13 +959,15 @@ img { display: block; max-width: 100%; }
   gap: 6px;
 }
 .profile-brief__name {
-  font-size: var(--size-md);
-  font-weight: 700;
+  font-size:   var(--size-md);
+  font-family: var(--font-logo);
+  font-style:  italic;
+  font-weight: 400;
   letter-spacing: 0.04em;
 }
 .profile-brief__role {
-  font-size: var(--size-xs);
-  color: var(--fg-dim);
+  font-size:   var(--size-xs);
+  font-weight: 700;
   letter-spacing: var(--ls-wide);
 }
 
