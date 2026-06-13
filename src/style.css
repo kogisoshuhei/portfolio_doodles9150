@@ -130,10 +130,12 @@ img { display: block; max-width: 100%; }
   font-weight: 400;
   font-size:   var(--size-xs);
   letter-spacing: var(--ls-wide);
-  transition:  background 0.08s, color 0.08s;
+  background:  #3d1a00;
+  color:       #d4a07a;
+  transition:  background 0.15s, color 0.15s;
 }
-.header__nav a:hover       { background: rgba(210,110,20,0.12); color: #7A3000; text-decoration: none; }
-.header__nav a.is-current  { background: var(--fg); color: var(--bg); }
+.header__nav a:hover       { background: #c04a00; color: #fff; text-decoration: none; }
+.header__nav a.is-current  { background: #8a2f00; color: #fff; }
 
 .header__spacer { flex: 1; }
 
