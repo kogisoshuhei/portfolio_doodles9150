@@ -241,6 +241,7 @@ img { display: block; max-width: 100%; }
 
 .tag {
   font-size: var(--size-xs); letter-spacing: var(--ls-wide);
+  font-family: var(--font-label);
   padding: 2px 8px; border: var(--border);
 }
 .tag[data-type="Illust"]     { background: #D4638C; color: #fff; border-color: #D4638C; }
@@ -521,6 +522,7 @@ img { display: block; max-width: 100%; }
 
 .work-card__type {
   font-size: var(--size-xs); letter-spacing: var(--ls-wide);
+  font-family: var(--font-label);
   border: 1px solid currentColor; padding: 1px 5px;
   flex-shrink: 0; align-self: center;
   transition: color 0.25s ease;
@@ -1510,6 +1512,7 @@ img { display: block; max-width: 100%; }
 }
 .boardgame-card__cat {
   font-size: var(--size-xs); letter-spacing: var(--ls-wide);
+  font-family: var(--font-label);
   border: 1px solid currentColor; padding: 1px 5px;
   white-space: nowrap;
 }
@@ -1646,8 +1649,6 @@ img { display: block; max-width: 100%; }
 .boardgame-card__name,
 .boardgame-card__overlay-name,
 .news-card__title,
-.profile-name,
-.profile-brief__name,
 .window__title,
 .slideshow__name,
 .related__name          { font-family: var(--font-title); }
