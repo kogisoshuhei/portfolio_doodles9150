@@ -1062,6 +1062,12 @@ function renderRelatedItems() {
         const imgAttr = w.img
           ? `src="${w.img}"`
           : `data-auto-base="${imgBaseFn(w)}"`;
+        const catBadges = workEl
+          ? (w.type ? `<span class="work-card__type" data-type="${w.type}">${w.type}</span>` : '')
+          : (w.category
+              ? (Array.isArray(w.category) ? w.category : [w.category])
+                  .map(c => `<span class="boardgame-card__cat" data-cat="${c}">${c}</span>`).join('')
+              : '');
         return `<a class="related__card" href="${hrefFn(w)}">
           <figure class="related__thumb">
             <img class="related__thumb-img" ${imgAttr} alt="${name}" loading="lazy" />
@@ -1070,8 +1076,11 @@ function renderRelatedItems() {
             </div>
           </figure>
           <span class="related__label">
-            <span class="related__num">${w.num}</span>
-            <span class="related__name">${name}</span>
+            <span class="related__label-row">
+              <span class="related__num">${w.num}</span>
+              <span class="related__name">${name}</span>
+            </span>
+            ${catBadges ? `<span class="related__cats">${catBadges}</span>` : ''}
           </span>
         </a>`;
       }).join('')}

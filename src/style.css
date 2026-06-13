@@ -1132,11 +1132,13 @@ img { display: block; max-width: 100%; }
   transition: background 0.15s;
 }
 @media (hover: hover) {
-  .related__card:hover                       { background: var(--fg); color: var(--bg); }
-  .related__card:hover .related__thumb-img   { filter: blur(5px) brightness(0.6); }
-  .related__card:hover .related__overlay     { opacity: 1; }
-  .related__card:hover .related__label       { border-top-color: var(--bg); }
-  .related__card:hover .related__num         { color: var(--bg); }
+  .related__card:hover                         { background: var(--fg); color: var(--bg); }
+  .related__card:hover .related__thumb-img     { filter: blur(5px) brightness(0.6); }
+  .related__card:hover .related__overlay       { opacity: 1; }
+  .related__card:hover .related__label         { border-top-color: var(--bg); }
+  .related__card:hover .related__num           { color: var(--bg); }
+  .related__card:hover .work-card__type,
+  .related__card:hover .boardgame-card__cat    { opacity: 0.85; }
 }
 
 .related__thumb {
@@ -1187,18 +1189,24 @@ img { display: block; max-width: 100%; }
 
 .related__label {
   display:        flex;
-  align-items:    center;
-  gap:            0.4em;
+  flex-direction: column;
+  gap:            4px;
   padding:        6px 8px;
   font-size:      var(--size-xs);
   letter-spacing: var(--ls-wide);
   border-top:     var(--border);
   overflow:       hidden;
 }
+.related__label-row {
+  display: flex; align-items: center; gap: 0.4em; overflow: hidden;
+}
 .related__num  { flex-shrink: 0; color: var(--fg-dim); }
 .related__name {
   flex: 1; min-width: 0;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.related__cats {
+  display: flex; flex-wrap: nowrap; gap: 4px; overflow: hidden;
 }
 
 /* ════════════════════════════════════════════════════════════
