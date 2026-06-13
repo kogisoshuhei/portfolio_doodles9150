@@ -1531,6 +1531,10 @@ img { display: block; max-width: 100%; }
 }
 .boardgame-card__cat[data-cat="GameDesign"] { background: #5588D6; color: #fff; border-color: #5588D6; }
 .boardgame-card__cat[data-cat="Artwork"]    { background: #D4638C; color: #fff; border-color: #D4638C; }
+.boardgame-card__cat[data-cat="3DModeling"] { background: #3DAB7C; color: #fff; border-color: #3DAB7C; }
+.boardgame-card__cat[data-cat="Animation"]  { background: #5588D6; color: #fff; border-color: #5588D6; }
+.boardgame-card__cat[data-cat="Illust"]     { background: #D4638C; color: #fff; border-color: #D4638C; }
+.boardgame-card__cat[data-cat="other"]      { background: #8896A6; color: #fff; border-color: #8896A6; }
 .boardgame-card__num {
   flex-shrink: 0;
   color: var(--fg-dim);
