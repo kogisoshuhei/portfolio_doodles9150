@@ -75,12 +75,14 @@
       });
 
       /* works type / boardgame category (| または ｜ 区切り) */
+      const _typeNorm = { '3DModering': '3DModeling', '3dmodeling': '3DModeling', '3dModeling': '3DModeling' };
+      const _norm = v => _typeNorm[v] || v;
       if (kind === 'works' && obj.type) {
-        const types = obj.type.split(/[|｜]/).map(s => s.trim()).filter(Boolean);
+        const types = obj.type.split(/[|｜]/).map(s => _norm(s.trim())).filter(Boolean);
         obj.type = types.length === 1 ? types[0] : types.length > 1 ? types : obj.type;
       }
       if (kind === 'boardgame' && obj.category) {
-        const cats = obj.category.split(/[|｜]/).map(s => s.trim()).filter(Boolean);
+        const cats = obj.category.split(/[|｜]/).map(s => _norm(s.trim())).filter(Boolean);
         obj.category = cats.length === 1 ? cats[0] : cats.length > 1 ? cats : undefined;
       }
 
