@@ -96,8 +96,9 @@ function applyLang(lang) {
     btn.textContent = lang === 'ja' ? 'EN' : 'JP';
   });
 
-  /* work detail の再描画 */
+  /* work / news detail の再描画 */
   renderWorkDetail();
+  renderNewsDetail();
 
   /* dynamic content の再描画 */
   if (typeof _renderNewsPage === 'function') {
@@ -741,36 +742,49 @@ function renderBoardgameCardGrid(gridEl, categoryFilter) {
 }
 
 /* ── News rendering ─────────────────────────────────────────── */
+
+/* 記事詳細ページのURL（root レベルページ → news/detail.html） */
+function newsDetailHref(n) {
+  const key = n.num ? `num=${encodeURIComponent(n.num)}` : `date=${encodeURIComponent(n.date)}`;
+  return `./news/detail.html?${key}`;
+}
+
+/* body / bodyEn が配列（| 区切り）の場合は先頭段落のみ返す（カード用） */
+function newsBodyText(n) {
+  const lang = currentLang();
+  const raw  = lang === 'en' && n.bodyEn ? n.bodyEn : n.body;
+  if (Array.isArray(raw)) return raw[0] || '';
+  return (raw || '').split(/[|｜]/)[0].trim();
+}
+
 function newsItemHTML(n) {
   const lang    = currentLang();
   const display = n.date.replace(/-/g, '.');
   const title   = lang === 'en' && n.titleEn ? n.titleEn : n.title;
-  const body    = lang === 'en' && n.bodyEn  ? n.bodyEn  : n.body;
-  return `<article class="news-item">
+  return `<a class="news-item" href="${newsDetailHref(n)}">
     <time class="news-item__date" datetime="${n.date}">${display}</time>
     <div class="news-item__content">
       <p class="news-item__title">${title}</p>
-      <p class="news-item__body">${body}</p>
+      <p class="news-item__body">${newsBodyText(n)}</p>
     </div>
-  </article>`;
+  </a>`;
 }
 
 function newsCardHTML(n) {
   const lang    = currentLang();
   const display = n.date.replace(/-/g, '.');
   const title   = lang === 'en' && n.titleEn ? n.titleEn : n.title;
-  const body    = lang === 'en' && n.bodyEn  ? n.bodyEn  : n.body;
   const thumb   = n.img
     ? `<figure class="news-card__thumb"><img src="${n.img}" alt="${title}" loading="lazy" /></figure>`
     : '';
-  return `<article class="news-card">
+  return `<a class="news-card" href="${newsDetailHref(n)}">
     ${thumb}
     <div class="news-card__body">
       <time class="news-card__date" datetime="${n.date}">${display}</time>
       <p class="news-card__title">${title}</p>
-      <p class="news-card__desc">${body}</p>
+      <p class="news-card__desc">${newsBodyText(n)}</p>
     </div>
-  </article>`;
+  </a>`;
 }
 
 const newsListEl  = document.getElementById('js-news-list');
@@ -1103,6 +1117,61 @@ function renderRelatedItems() {
   relEl.querySelectorAll('img[data-auto-base]').forEach(resolveThumbImg);
 }
 
+/* ── News detail page rendering ─────────────────────────────── */
+function renderNewsDetail() {
+  const articleEl = document.querySelector('.news-detail');
+  if (!articleEl || typeof NEWS === 'undefined') return;
+
+  const params = new URLSearchParams(location.search);
+  const num    = params.get('num');
+  const date   = params.get('date');
+  const n = num
+    ? NEWS.find(item => item.num === num)
+    : NEWS.find(item => item.date === date);
+  if (!n) return;
+
+  const isEn  = currentLang() === 'en';
+  const title = isEn && n.titleEn ? n.titleEn : n.title;
+  const body  = isEn && n.bodyEn  ? n.bodyEn  : n.body;
+
+  document.title = `${title} — ${SITE.name}`;
+
+  const titlebarEl = document.getElementById('js-detail-titlebar');
+  if (titlebarEl) titlebarEl.textContent = `NEWS — ${n.date.replace(/-/g, '.')}`;
+
+  const dateEl = document.getElementById('js-detail-date');
+  if (dateEl) {
+    dateEl.textContent = n.date.replace(/-/g, '.');
+    dateEl.setAttribute('datetime', n.date);
+  }
+
+  const nameEl = document.getElementById('js-detail-name');
+  if (nameEl) nameEl.textContent = title;
+
+  const descEl = document.getElementById('js-detail-desc');
+  if (descEl) {
+    let paras;
+    if (Array.isArray(body)) {
+      paras = body;
+    } else if (body) {
+      paras = body.split(/[|｜]/).map(s => s.trim()).filter(Boolean);
+    } else {
+      paras = [];
+    }
+    descEl.innerHTML = paras.map(p => `<p>${p}</p>`).join('');
+  }
+
+  /* ギャラリー（初回のみ構築） */
+  const galleryEl = document.getElementById('js-gallery');
+  if (galleryEl && !galleryEl.dataset.built) {
+    const imgs = n.gallery || (n.img ? [n.img] : []);
+    if (imgs.length) {
+      buildGallery(galleryEl, title, imgs);
+      galleryEl.dataset.built = 'true';
+    }
+  }
+}
+
 /* ── Language init ───────────────────────────────────────────── */
 document.querySelectorAll('.header__lang').forEach(btn => {
   btn.addEventListener('click', () => setLang(_lang === 'ja' ? 'en' : 'ja'));
@@ -1176,6 +1245,7 @@ function initRender() {
   /* 詳細ページ・言語適用 */
   renderWorkDetail();
   renderBoardgameDetail();
+  renderNewsDetail();
   renderRelatedItems();
   applyPageIntro();
   applyLang(_lang);

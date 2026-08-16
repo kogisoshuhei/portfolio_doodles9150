@@ -675,6 +675,53 @@ img { display: block; max-width: 100%; }
   overflow: hidden;
 }
 
+/* news-card / news-item をリンク化（<a> に変更） */
+.news-card,
+.news-item {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.12s;
+}
+.news-card:hover,
+.news-item:hover { opacity: 0.75; }
+
+/* ════════════════════════════════════════════════════════════
+   NEWS DETAIL PAGE
+   ════════════════════════════════════════════════════════════ */
+.news-detail { margin-bottom: var(--pad-lg); }
+
+.news-detail__content {
+  padding: var(--pad);
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-sm);
+  max-width: 720px;
+}
+
+.news-detail__date {
+  font-size: var(--size-xs);
+  letter-spacing: var(--ls-wide);
+  color: var(--fg-dim);
+  font-family: var(--font-label);
+}
+
+.news-detail__title {
+  font-size: var(--size-lg);
+  font-family: var(--font-title);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.news-detail__body {
+  font-size: var(--size-base);
+  line-height: var(--lh);
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding-top: var(--pad-sm);
+}
+
 .news-pagination {
   display: flex;
   gap: 6px;
@@ -1668,6 +1715,7 @@ img { display: block; max-width: 100%; }
 .work-card__name,
 .boardgame-card__name,
 .boardgame-card__overlay-name,
+.news-detail__title,
 .news-card__title,
 .window__title,
 .slideshow__name,
@@ -1678,6 +1726,7 @@ img { display: block; max-width: 100%; }
 .work-detail__desc,
 .profile-bio,
 .profile-brief__role,
+.news-detail__body,
 .news-card__desc,
 .news-item__body,
 .page-intro__text,
@@ -1700,6 +1749,7 @@ img { display: block; max-width: 100%; }
 .window__back,
 .section-header,
 .type-filter__btn,
+.news-detail__date,
 .news-card__date,
 .news-item__date,
 .news-pagination__btn,

@@ -74,6 +74,14 @@
         else        delete obj[k];
       });
 
+      /* news body (| または ｜ 区切り → 段落配列) */
+      if (kind === 'news') {
+        ['body', 'bodyEn'].forEach(k => {
+          if (obj[k]) obj[k] = obj[k].split(/[|｜]/).map(s => s.trim()).filter(Boolean);
+          else        delete obj[k];
+        });
+      }
+
       /* works type / boardgame category (| または ｜ 区切り) */
       const _typeNorm = { '3DModering': '3DModeling', '3dmodeling': '3DModeling', '3dModeling': '3DModeling' };
       const _norm = v => _typeNorm[v] || v;

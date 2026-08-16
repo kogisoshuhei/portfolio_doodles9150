@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEWS — doodles9150</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Changa+One:ital@0;1&family=Lexend:wght@400;700&family=Noto+Serif+JP:wght@400;700&family=Overpass:wght@400;700&family=Sawarabi+Gothic&display=swap" rel="stylesheet" />
+  <link rel="icon" href="../assets/favicon.png" type="image/png" />
+  <link rel="stylesheet" href="../src/style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <header class="header">
+      <a class="header__logo" href="../index.html">doodles9150</a>
+      <nav class="header__nav" aria-label="primary">
+        <a href="../works.html">WORKS</a>
+        <a href="../boardgame.html">BOARDGAME</a>
+        <a href="../profile.html">PROFILE</a>
+        <a href="../index.html#contact">CONTACT</a>
+        <span class="header__spacer"></span>
+      </nav>
+      <button class="header__lang" aria-label="言語切替">EN</button>
+      <span class="header__clock" id="js-clock">--:--:--</span>
+    </header>
+
+    <article class="window news-detail">
+      <div class="window__titlebar">
+        <span class="window__title" id="js-detail-titlebar">NEWS</span>
+        <a href="../news.html" class="window__back">← BACK</a>
+      </div>
+
+      <div class="work-gallery" id="js-gallery"></div>
+
+      <div class="news-detail__content">
+        <time class="news-detail__date" id="js-detail-date"></time>
+        <h1 class="news-detail__title" id="js-detail-name"></h1>
+        <div class="news-detail__body" id="js-detail-desc"></div>
+        <a href="../news.html" class="work-detail__back-link"
+           data-ja="← NEWS に戻る" data-en="← Back to NEWS">← NEWS に戻る</a>
+      </div>
+    </article>
+
+    <footer class="footer">
+      <span>© 2026 doodles9150</span>
+      <span id="js-build-date">----</span>
+    </footer>
+
+  </div>
+  <script src="../src/news-data.js"></script>
+  <script src="../src/sheets-config.js"></script>
+  <script src="../src/sheets-loader.js"></script>
+  <script src="../src/main.js"></script>
+</body>
+</html>
