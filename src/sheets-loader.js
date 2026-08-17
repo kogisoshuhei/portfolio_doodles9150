@@ -54,7 +54,12 @@
     if (lines.length < 2) return null;
 
     /* ヘッダーの「（注釈）」「(注釈)」を除去して純粋なキー名にする */
-    const headers = parseLine(lines[0]).map(h => h.trim().replace(/[（(].*/, '').trim());
+    /* スプレッドシートのヘッダー表記ゆれも正規化（titlerEn → titleEn など） */
+    const headers = parseLine(lines[0]).map(h => {
+      h = h.trim().replace(/[（(].*/, '').trim();
+      if (h === 'titlerEn') h = 'titleEn';
+      return h;
+    });
     const galleryIdx = headers.indexOf('gallery');
 
     const rows = lines.slice(1).map(line => {
@@ -109,6 +114,23 @@
           .map(s => s.includes('drive.google.com') ? driveUrl(s) : s);
         if (galleryUrls.length) obj.gallery = galleryUrls;
         else delete obj.gallery;
+      } else if (kind === 'news') {
+        /* NEWS: gallery列がない場合、img列以降の無名列も追加画像として収集 */
+        const imgColIdx = headers.indexOf('img');
+        if (imgColIdx >= 0) {
+          const newsImgs = vals.slice(imgColIdx)
+            .map(s => (s ?? '').trim())
+            .filter(s => s && s !== '#VALUE!')
+            .map(s => s.includes('drive.google.com') ? driveUrl(s) : s)
+            .filter(Boolean);
+          if (newsImgs.length) {
+            obj.img = newsImgs[0];
+            if (newsImgs.length > 1) obj.gallery = newsImgs;
+            else delete obj.gallery;
+          }
+        } else {
+          delete obj.gallery;
+        }
       } else {
         delete obj.gallery;
       }
