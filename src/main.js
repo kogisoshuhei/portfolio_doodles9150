@@ -56,6 +56,16 @@ const SITE = {
   });
 })();
 
+/* ── Linkify: テキスト中の URL を自動でリンク化 ─────────────── */
+function linkify(text) {
+  return text.replace(/(https?:\/\/[^\s<>"'）]+)/g, function (url) {
+    /* 末尾の句読点・括弧はURLに含めない */
+    const trail = url.match(/[、。，．）\]）]+$/)?.[0] ?? '';
+    const cleanUrl = trail ? url.slice(0, -trail.length) : url;
+    return `<a class="auto-link" href="${cleanUrl}" target="_blank" rel="noopener noreferrer">${cleanUrl}</a>${trail}`;
+  });
+}
+
 /* ── Type badge helpers ──────────────────────────────────────── */
 function workTypeBadges(type) {
   if (!type) return '';
@@ -920,7 +930,7 @@ function renderWorkDetail() {
     const paras = isEn
       ? (w.detailEn || (w.descEn ? [w.descEn] : null) || w.detail || [w.desc])
       : (w.detail   || [w.desc]);
-    descEl.innerHTML = paras.map(p => `<p>${p}</p>`).join('');
+    descEl.innerHTML = paras.map(p => `<p>${linkify(p)}</p>`).join('');
   }
 
   const linkEl = document.getElementById('js-detail-link');
@@ -1013,7 +1023,7 @@ function renderBoardgameDetail() {
     const paras = isEn
       ? (w.detailEn || (w.descEn ? [w.descEn] : null) || w.detail || [w.desc])
       : (w.detail   || [w.desc]);
-    descEl.innerHTML = paras.map(p => `<p>${p}</p>`).join('');
+    descEl.innerHTML = paras.map(p => `<p>${linkify(p)}</p>`).join('');
   }
 
   const linkEl = document.getElementById('js-detail-link');
@@ -1158,7 +1168,7 @@ function renderNewsDetail() {
     } else {
       paras = [];
     }
-    descEl.innerHTML = paras.map(p => `<p>${p}</p>`).join('');
+    descEl.innerHTML = paras.map(p => `<p>${linkify(p)}</p>`).join('');
   }
 
   /* ギャラリー（画像セットが変わった場合のみ再構築） */

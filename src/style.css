@@ -675,6 +675,14 @@ img { display: block; max-width: 100%; }
   overflow: hidden;
 }
 
+/* テキスト中の自動リンク */
+.auto-link {
+  color: inherit;
+  text-underline-offset: 2px;
+  word-break: break-all;
+}
+.auto-link:hover { opacity: 0.7; }
+
 /* news-card / news-item をリンク化（<a> に変更） */
 .news-card,
 .news-item {
