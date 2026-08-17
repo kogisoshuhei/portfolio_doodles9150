@@ -200,7 +200,7 @@
   /* ── sessionStorage キャッシュ（5分TTL）─────────────────────
      ページ遷移（リンク経由）のみキャッシュを使用する。
      リロード（F5）時はキャッシュを破棄してスプレッドシートから再取得する。 */
-  const _CACHE_KEY = 'sc_v1';
+  const _CACHE_KEY = 'sc_v2';
   const _CACHE_TTL = 5 * 60 * 1000;
   const _isReload  = (performance.getEntriesByType?.('navigation')?.[0]?.type === 'reload')
                   || (performance.navigation?.type === 1);
