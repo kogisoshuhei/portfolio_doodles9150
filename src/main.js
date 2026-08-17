@@ -1161,13 +1161,14 @@ function renderNewsDetail() {
     descEl.innerHTML = paras.map(p => `<p>${p}</p>`).join('');
   }
 
-  /* ギャラリー（初回のみ構築） */
+  /* ギャラリー（画像セットが変わった場合のみ再構築） */
   const galleryEl = document.getElementById('js-gallery');
-  if (galleryEl && !galleryEl.dataset.built) {
-    const imgs = n.gallery || (n.img ? [n.img] : []);
-    if (imgs.length) {
+  if (galleryEl) {
+    const imgs   = n.gallery || (n.img ? [n.img] : []);
+    const newKey = imgs.join('|');
+    if (imgs.length && galleryEl.dataset.builtKey !== newKey) {
       buildGallery(galleryEl, title, imgs);
-      galleryEl.dataset.built = 'true';
+      galleryEl.dataset.builtKey = newKey;
     }
   }
 }
